@@ -29,17 +29,17 @@ namespace SnakeGame {
 		Menu exitMenu_;
 		Menu pauseMenu_;
 		Menu gameOverMenu_;
-		LeaderBoard leaderBoard_;
+		//LeaderBoard leaderBoard_;
 
-		Player player_;
-		Apple apple_;
-		Rock rock_;
+		//Player player_;
+		//Apple apple_;
+		//Rock rock_;
 
-		UI UI_;
-
-		std::vector<Apple> fieldOfApples_;
-		std::vector<Rock> fieldOfRocks_;
+		//UI UI_;
 
 		GameStates gameStates_;
+
+		//std::vector<Apple> fieldOfApples_;
+		//std::vector<Rock> fieldOfRocks_;
 	};
 }

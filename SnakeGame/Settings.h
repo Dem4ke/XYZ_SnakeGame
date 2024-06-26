@@ -35,6 +35,7 @@ namespace SnakeGame {
 
 		int getNumOfApples() const;
 		GameStateType getCurrentGameState() const;
+
 	private:
 		char gameSettings_ = 3;
 

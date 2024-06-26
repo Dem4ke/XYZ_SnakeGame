@@ -14,6 +14,8 @@ namespace SnakeGame {
 		assert(snakeBodyTexture.loadFromFile(resourcesPath_ + "Snake_Body.png"));
 		assert(appleTexture.loadFromFile(resourcesPath_ + "Apple.png"));
 		assert(wallTexture.loadFromFile(resourcesPath_ + "wall.png"));
+		assert(mainMenuBackground.loadFromFile(resourcesPath_ + "Background.png"));
+		assert(gameBackground.loadFromFile(resourcesPath_ + "Background.png"));
 	}
 
 	// Load sounds from resources path

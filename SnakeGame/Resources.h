@@ -21,9 +21,14 @@ namespace SnakeGame {
 		sf::Texture snakeBodyTexture;
 		sf::Texture appleTexture;
 		sf::Texture wallTexture;
+
+		sf::Texture mainMenuBackground;
+		sf::Texture gameBackground;
+
 		sf::SoundBuffer menuMove;
 		sf::SoundBuffer appleEatenSound;
 		sf::SoundBuffer gameOverSound;
+
 		sf::Sound sound;
 		sf::Font font;
 

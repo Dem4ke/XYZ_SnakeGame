@@ -81,39 +81,39 @@ namespace SnakeGame {
 
 	// LEADER BOAED INITIALIZATION
 
-	void LeaderBoard::init(std::string menuName, float buttonSize, GameStates& settings) {
-		posX_ = resources_.getWindowWidth() / 2.f;
-		posY_ = resources_.getWindowHeight() / 3.f;
-		buttonSize_ = buttonSize;
+	//void LeaderBoard::init(std::string menuName, float buttonSize, GameStates& settings) {
+	//	posX_ = resources_.getWindowWidth() / 2.f;
+	//	posY_ = resources_.getWindowHeight() / 3.f;
+	//	buttonSize_ = buttonSize;
 
-		// Initialization of name of a game
-		menuName_.setFont(resources_.font);
-		menuName_.setCharacterSize(buttonSize_ * 1.5f);
-		menuName_.setFillColor(sf::Color::Red);
-		menuName_.setString(menuName);
-		menuName_.setOrigin(sf::Vector2f(menuName_.getGlobalBounds().width / 2.f, menuName_.getGlobalBounds().height / 2.f));
-		menuName_.setPosition(posX_, posY_ - buttonSize_);
+	//	// Initialization of name of a game
+	//	menuName_.setFont(resources_.font);
+	//	menuName_.setCharacterSize(buttonSize_ * 1.5f);
+	//	menuName_.setFillColor(sf::Color::Red);
+	//	menuName_.setString(menuName);
+	//	menuName_.setOrigin(sf::Vector2f(menuName_.getGlobalBounds().width / 2.f, menuName_.getGlobalBounds().height / 2.f));
+	//	menuName_.setPosition(posX_, posY_ - buttonSize_);
 
-		// Initialization of players names
-		playerName_.setFont(resources_.font);
-		playerName_.setCharacterSize(buttonSize_);
-		playerName_.setFillColor(sf::Color::White);
+	//	// Initialization of players names
+	//	playerName_.setFont(resources_.font);
+	//	playerName_.setCharacterSize(buttonSize_);
+	//	playerName_.setFillColor(sf::Color::White);
 
-		// Initialization of players score
-		playerScore_.setFont(resources_.font);
-		playerScore_.setCharacterSize(buttonSize_);
-		playerScore_.setFillColor(sf::Color::White);
+	//	// Initialization of players score
+	//	playerScore_.setFont(resources_.font);
+	//	playerScore_.setCharacterSize(buttonSize_);
+	//	playerScore_.setFillColor(sf::Color::White);
 
-		table_["Hydra"] = settings.numOfApples;
-		table_["Dominatus"] = settings.numOfApples - (settings.numOfApples / 4);
-		table_["Alpha"] = settings.numOfApples / 2;
-		table_["Omega"] = 1;
-		table_["Player"] = 0;
+	//	table_["Hydra"] = settings.numOfApples;
+	//	table_["Dominatus"] = settings.numOfApples - (settings.numOfApples / 4);
+	//	table_["Alpha"] = settings.numOfApples / 2;
+	//	table_["Omega"] = 1;
+	//	table_["Player"] = 0;
 
-		sortTable(settings);
-	}
+	//	sortTable(settings);
+	//}
 
-	void LeaderBoard::sortTable(GameStates& settings) {
+	/*void LeaderBoard::sortTable(GameStates& settings) {
 		float space = buttonSize_;
 
 		table_["Player"] = settings.eatenApples_;
@@ -144,7 +144,7 @@ namespace SnakeGame {
 
 			space += buttonSize_;
 		}
-	}
+	}*/
 
 	size_t LeaderBoard::getPositionsCount() const { return liderBoard_.size(); }
 
