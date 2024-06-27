@@ -3,19 +3,39 @@
 namespace SnakeGame {
 
 	// Initialization of all menu buttons
-	void Menu::init(std::string menuName, std::vector<std::string>& allButtons, float buttonSize) {
+	void Menu::init(std::string menuName, std::vector<std::string>& allButtons, float buttonSize, sf::Color colorOfButtons, int menuId) {
 		float posX = resources_.getWindowWidth() / 2.f;
 		float posY = resources_.getWindowHeight() / 3.f;
+		buttonsColor_ = colorOfButtons;
 
 		// Initialization of background of menu
-		background_.setSize(sf::Vector2f(resources_.getWindowWidth(), resources_.getWindowHeight()));
-		background_.setFillColor(sf::Color::Black);
-		background_.setPosition(0.f, 0.f);
+		// id: 1 - main; 2 - options; 3 - exit, 4 - pause; 5 - game over
+		switch (menuId) {
+		case(1):
+			backgroundSprite_.setTexture(resources_.mainMenuBackground);
+			break;
+		case(2):
+			backgroundSprite_.setTexture(resources_.mainMenuBackground);
+			break;
+		case(3):
+			backgroundSprite_.setTexture(resources_.wallTexture);
+			break;
+		case(4):
+			backgroundSprite_.setTexture(resources_.mainMenuBackground);
+			break;
+		case(5):
+			backgroundSprite_.setTexture(resources_.wallTexture);
+			break;
+		default:
+			backgroundSprite_.setTexture(resources_.wallTexture);
+		}
+
+		SetSpriteSize(backgroundSprite_, resources_.getWindowWidth(), resources_.getWindowHeight());
 
 		// Initialization of name of a game
 		menuName_.setFont(resources_.font);
 		menuName_.setCharacterSize(buttonSize * 1.5f);
-		menuName_.setFillColor(sf::Color::Red);
+		menuName_.setFillColor(buttonsColor_);
 		menuName_.setString(menuName);
 		menuName_.setOrigin(sf::Vector2f(menuName_.getGlobalBounds().width / 2.f, menuName_.getGlobalBounds().height / 2.f));
 		menuName_.setPosition(posX, posY - buttonSize);
@@ -25,7 +45,7 @@ namespace SnakeGame {
 		float space = buttonSize;
 		menuButtons_.setFont(resources_.font);
 		menuButtons_.setCharacterSize(buttonSize);
-		menuButtons_.setFillColor(sf::Color::White);
+		menuButtons_.setFillColor(buttonsColor_);
 
 		buttons_.clear();
 		for (auto& i : allButtons) {
@@ -38,18 +58,18 @@ namespace SnakeGame {
 
 		// Color of the first button
 		int selectedButton_ = 0;
-		buttons_[selectedButton_].setFillColor(sf::Color::Red);
+		buttons_[selectedButton_].setFillColor(choosenButtonColor_);
 	}
 
 	void Menu::moveUp() {
 		if (selectedButton_ >= 0) {
-			buttons_[selectedButton_].setFillColor(sf::Color::White);
+			buttons_[selectedButton_].setFillColor(buttonsColor_);
 			--selectedButton_;
 
 			if (selectedButton_ < 0) {
 				selectedButton_ = buttons_.size() - 1;
 			}
-			buttons_[selectedButton_].setFillColor(sf::Color::Red);
+			buttons_[selectedButton_].setFillColor(choosenButtonColor_);
 		}
 	}
 
@@ -57,13 +77,13 @@ namespace SnakeGame {
 		size_t end = buttons_.size();
 
 		if (selectedButton_ <= end) {
-			buttons_[selectedButton_].setFillColor(sf::Color::White);
+			buttons_[selectedButton_].setFillColor(buttonsColor_);
 			++selectedButton_;
 
 			if (selectedButton_ == end) {
 				selectedButton_ = 0;
 			}
-			buttons_[selectedButton_].setFillColor(sf::Color::Red);
+			buttons_[selectedButton_].setFillColor(choosenButtonColor_);
 		}
 	}
 
@@ -75,7 +95,7 @@ namespace SnakeGame {
 
 	sf::Text Menu::getGeneralName() const { return menuName_; }
 
-	sf::RectangleShape Menu::getBackground() const { return background_; }
+	sf::Sprite Menu::getBackground() const { return backgroundSprite_; }
 
 	void Menu::changeButton(int num, std::string change) { buttons_[num].setString(change); }
 
@@ -156,7 +176,7 @@ namespace SnakeGame {
 
 	// FUNCTIONS
 
-	void MainMenuMovement(Menu& mainMenu, GameStates& settings, const sf::Event& event) {
+	void MainMenuMovement(Menu& mainMenu, GameStates& gameStates, const sf::Event& event) {
 		if (event.type == sf::Event::KeyPressed) {
 			if (event.key.code == sf::Keyboard::Up) {
 				mainMenu.moveUp();
@@ -165,27 +185,27 @@ namespace SnakeGame {
 				mainMenu.moveDown();
 			}
 			else if (event.key.code == sf::Keyboard::Escape) {
-				pushGameState(settings, GameStateType::ExitDialog);
+				gameStates.pushGameState(GameStateType::ExitDialog);
 			}
 			else if (event.key.code == sf::Keyboard::Enter) {
 				if (mainMenu.getSelectedButton() == 0) {
-					pushGameState(settings, GameStateType::Game);
+					gameStates.pushGameState(GameStateType::Game);
 				}
 				else if (mainMenu.getSelectedButton() == 1) {
-					pushGameState(settings, GameStateType::LeaderBoard);
+					gameStates.pushGameState(GameStateType::LeaderBoard);
 				}
 				else if (mainMenu.getSelectedButton() == 2) {
-					pushGameState(settings, GameStateType::Options);
+					gameStates.pushGameState(GameStateType::Options);
 				}
 				else if (mainMenu.getSelectedButton() == 3) {
-					pushGameState(settings, GameStateType::ExitDialog);
+					gameStates.pushGameState(GameStateType::ExitDialog);
 				}
 			}
 		}
 	}
 
-	void OptionsMenuMovement(Menu& optionsMenu, GameStates& settings, const sf::Event& event) {
-		if (event.type == sf::Event::KeyPressed) {
+	void OptionsMenuMovement(Menu& optionsMenu, GameStates& gameStates, const sf::Event& event) {
+		/*if (event.type == sf::Event::KeyPressed) {
 			if (event.key.code == sf::Keyboard::Up) {
 				optionsMenu.moveUp();
 			}
@@ -193,7 +213,7 @@ namespace SnakeGame {
 				optionsMenu.moveDown();
 			}
 			else if (event.key.code == sf::Keyboard::Escape) {
-				popGameState(settings);
+				gameStates.popGameState();
 			}
 			else if (event.key.code == sf::Keyboard::Enter) {
 				if (optionsMenu.getSelectedButton() == 0) {
@@ -217,10 +237,10 @@ namespace SnakeGame {
 					}
 				}
 			}
-		}
+		}*/
 	}
 
-	void ExitMenuMovement(Menu& exitMenu, GameStates& settings, const sf::Event& event, sf::RenderWindow& window) {
+	void ExitMenuMovement(Menu& exitMenu, GameStates& gameStates, const sf::Event& event, sf::RenderWindow& window) {
 		if (event.type == sf::Event::KeyPressed) {
 			if (event.key.code == sf::Keyboard::Up) {
 				exitMenu.moveUp();
@@ -229,7 +249,7 @@ namespace SnakeGame {
 				exitMenu.moveDown();
 			}
 			else if (event.key.code == sf::Keyboard::Escape) {
-				popGameState(settings);
+				gameStates.popGameState();
 			}
 			else if (event.key.code == sf::Keyboard::Enter) {
 				if (exitMenu.getSelectedButton() == 0) {
@@ -237,21 +257,21 @@ namespace SnakeGame {
 					return;
 				}
 				else if (exitMenu.getSelectedButton() == 1) {
-					popGameState(settings);
+					gameStates.popGameState();
 				}
 			}
 		}
 	}
 
-	void LeaderBoardMovement(LeaderBoard& leaderBoard, GameStates& settings, const sf::Event& event) {
+	void LeaderBoardMovement(LeaderBoard& leaderBoard, GameStates& gameStates, const sf::Event& event) {
 		if (event.type == sf::Event::KeyPressed) {
 			if (event.key.code == sf::Keyboard::Escape) {
-				popGameState(settings);
+				gameStates.popGameState();
 			}
 		}
 	}
 
-	void PauseMenuMovement(Menu& pauseMenu, GameStates& settings, const sf::Event& event) {
+	void PauseMenuMovement(Menu& pauseMenu, GameStates& gameStates, const sf::Event& event) {
 		if (event.type == sf::Event::KeyPressed) {
 			if (event.key.code == sf::Keyboard::Up) {
 				pauseMenu.moveUp();
@@ -260,33 +280,33 @@ namespace SnakeGame {
 				pauseMenu.moveDown();
 			}
 			else if (event.key.code == sf::Keyboard::Escape) {
-				popGameState(settings);
+				gameStates.popGameState();
 			}
 			else if (event.key.code == sf::Keyboard::Enter) {
 				if (pauseMenu.getSelectedButton() == 0) {
-					pushGameState(settings, GameStateType::GameReset);
+					gameStates.pushGameState(GameStateType::GameReset);
 				}
 				else if (pauseMenu.getSelectedButton() == 1) {
-					popGameState(settings);
+					gameStates.popGameState();
 				}
 			}
 		}
 	}
 
-	void GameOverMenuMovement(Menu& gameOverMenu, GameStates& settings, const sf::Event& event) {
+	void GameOverMenuMovement(Menu& gameOverMenu, GameStates& gameStates, const sf::Event& event) {
 		if (event.type == sf::Event::KeyPressed) {
 			if (event.key.code == sf::Keyboard::Enter) {
-				pushGameState(settings, GameStateType::GameReset);
+				gameStates.pushGameState(GameStateType::GameReset);
 			}
 			else if (event.key.code == sf::Keyboard::Escape) {
-				pushGameState(settings, GameStateType::GameReset);
+				gameStates.pushGameState(GameStateType::GameReset);
 			}
 		}
 	}
 
-	void ExitInPauseMenu(GameStates& settings) {
+	void ExitInPauseMenu(GameStates& gameStates) {
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
-			pushGameState(settings, GameStateType::Pause);
+			gameStates.pushGameState(GameStateType::Pause);
 		}
 	}
 

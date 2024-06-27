@@ -15,12 +15,14 @@ namespace SnakeGame {
 		std::vector<std::string> pauseButtons = { "Yes", "No" };
 		std::vector<std::string> gameOverButtons = { "\n\n\n\n\n\n\n\n\n\nExit" };
 
-		// Menu initialization (Name of menu, buttons, size of buttons, Name of menu will be in 1.5 bigger)
-		mainMenu_.init("Apples Game", mainButtons, 40.f);
-		optionsMenu_.init("Options", optionsButtons, 40.f);
-		exitMenu_.init("Do you want to exit?", exitButtons, 40.f);
-		pauseMenu_.init("Do you want to exit\n\tin main menu?\n", pauseButtons, 40.f);
-		gameOverMenu_.init("Game Over\n\n", gameOverButtons, 40.f);
+		// Menu initialization (Name of menu, vector of buttons, size of buttons, color of buttons, <id of menu>)
+		// Name of menu will be in 1.5 bigger, id of menu needs for background (black background by default)
+		// id: 1 - main; 2 - options; 3 - exit, 4 - pause; 5 - game over
+		mainMenu_.init("Snake Game", mainButtons, 40.f, sf::Color::White, 1);
+		optionsMenu_.init("Options", optionsButtons, 40.f, sf::Color::White, 2);
+		exitMenu_.init("Do you want to exit?", exitButtons, 40.f, sf::Color::White, 3);
+		pauseMenu_.init("Do you want to exit\n\tin main menu?\n", pauseButtons, 40.f, sf::Color::White, 1);
+		gameOverMenu_.init("Game Over\n\n", gameOverButtons, 40.f, sf::Color::White, 1);
 
 		//// Leader board initialization (Name of menu, size of names, Settings class object)
 		//leaderBoard_.init("Leader Board", 40.f, gameStates_);

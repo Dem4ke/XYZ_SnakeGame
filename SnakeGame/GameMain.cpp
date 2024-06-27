@@ -1,7 +1,7 @@
 ﻿#include "Game.h"
 
 int main() {
-	int seed = time(nullptr);
+	int seed = static_cast <int> (time(nullptr));
 	srand(seed);
 
 	// Game initialization
