@@ -3,31 +3,24 @@
 namespace SnakeGame {
 
 	// Initialization of all menu buttons
-	void Menu::init(std::string menuName, std::vector<std::string>& allButtons, float buttonSize, sf::Color colorOfButtons, int menuId) {
+	void Menu::init(std::string menuName, std::vector<std::string>& allButtons, 
+					float buttonSize, sf::Color colorOfButtons, int menuId) {
+
 		float posX = resources_.getWindowWidth() / 2.f;
 		float posY = resources_.getWindowHeight() / 3.f;
-		buttonsColor_ = colorOfButtons;
+		mainButtonColor_ = colorOfButtons;
 
 		// Initialization of background of menu
-		// id: 1 - main; 2 - options; 3 - exit, 4 - pause; 5 - game over
+		// id: 0 - empty, 1 - main background
 		switch (menuId) {
+		case(0):
+			backgroundSprite_.setColor(sf::Color::Black);
+			break;
 		case(1):
 			backgroundSprite_.setTexture(resources_.mainMenuBackground);
 			break;
-		case(2):
-			backgroundSprite_.setTexture(resources_.mainMenuBackground);
-			break;
-		case(3):
-			backgroundSprite_.setTexture(resources_.wallTexture);
-			break;
-		case(4):
-			backgroundSprite_.setTexture(resources_.mainMenuBackground);
-			break;
-		case(5):
-			backgroundSprite_.setTexture(resources_.wallTexture);
-			break;
 		default:
-			backgroundSprite_.setTexture(resources_.wallTexture);
+			backgroundSprite_.setTexture(resources_.mainMenuBackground);
 		}
 
 		SetSpriteSize(backgroundSprite_, resources_.getWindowWidth(), resources_.getWindowHeight());
@@ -35,7 +28,7 @@ namespace SnakeGame {
 		// Initialization of name of a game
 		menuName_.setFont(resources_.font);
 		menuName_.setCharacterSize(buttonSize * 1.5f);
-		menuName_.setFillColor(buttonsColor_);
+		menuName_.setFillColor(mainButtonColor_);
 		menuName_.setString(menuName);
 		menuName_.setOrigin(sf::Vector2f(menuName_.getGlobalBounds().width / 2.f, menuName_.getGlobalBounds().height / 2.f));
 		menuName_.setPosition(posX, posY - buttonSize);
@@ -45,7 +38,7 @@ namespace SnakeGame {
 		float space = buttonSize;
 		menuButtons_.setFont(resources_.font);
 		menuButtons_.setCharacterSize(buttonSize);
-		menuButtons_.setFillColor(buttonsColor_);
+		menuButtons_.setFillColor(mainButtonColor_);
 
 		buttons_.clear();
 		for (auto& i : allButtons) {
@@ -58,18 +51,18 @@ namespace SnakeGame {
 
 		// Color of the first button
 		int selectedButton_ = 0;
-		buttons_[selectedButton_].setFillColor(choosenButtonColor_);
+		buttons_[selectedButton_].setFillColor(chosenButtonColor_);
 	}
 
 	void Menu::moveUp() {
 		if (selectedButton_ >= 0) {
-			buttons_[selectedButton_].setFillColor(buttonsColor_);
+			buttons_[selectedButton_].setFillColor(mainButtonColor_);
 			--selectedButton_;
 
 			if (selectedButton_ < 0) {
 				selectedButton_ = buttons_.size() - 1;
 			}
-			buttons_[selectedButton_].setFillColor(choosenButtonColor_);
+			buttons_[selectedButton_].setFillColor(chosenButtonColor_);
 		}
 	}
 
@@ -77,13 +70,13 @@ namespace SnakeGame {
 		size_t end = buttons_.size();
 
 		if (selectedButton_ <= end) {
-			buttons_[selectedButton_].setFillColor(buttonsColor_);
+			buttons_[selectedButton_].setFillColor(mainButtonColor_);
 			++selectedButton_;
 
 			if (selectedButton_ == end) {
 				selectedButton_ = 0;
 			}
-			buttons_[selectedButton_].setFillColor(choosenButtonColor_);
+			buttons_[selectedButton_].setFillColor(chosenButtonColor_);
 		}
 	}
 
@@ -192,12 +185,15 @@ namespace SnakeGame {
 					gameStates.pushGameState(GameStateType::Game);
 				}
 				else if (mainMenu.getSelectedButton() == 1) {
-					gameStates.pushGameState(GameStateType::LeaderBoard);
+					gameStates.pushGameState(GameStateType::DifficulityLevelChoose);
 				}
 				else if (mainMenu.getSelectedButton() == 2) {
-					gameStates.pushGameState(GameStateType::Options);
+					gameStates.pushGameState(GameStateType::LeaderBoard);
 				}
 				else if (mainMenu.getSelectedButton() == 3) {
+					gameStates.pushGameState(GameStateType::Options);
+				}
+				else if (mainMenu.getSelectedButton() == 4) {
 					gameStates.pushGameState(GameStateType::ExitDialog);
 				}
 			}

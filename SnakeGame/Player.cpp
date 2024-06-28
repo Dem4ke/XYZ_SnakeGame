@@ -17,10 +17,6 @@ namespace SnakeGame {
 	//	SetSpriteSize(sprite_, size_, size_);
 	//	SetSpriteRelativeOrigin(sprite_, 0.5f, 0.5f);
 
-	//	// Initialization of background of game
-	//	background_.setSize(sf::Vector2f(resources_.getWindowWidth(), resources_.getWindowHeight()));
-	//	background_.setFillColor(sf::Color::Black);
-	//	background_.setPosition(0.f, 0.f);
 	//}
 
 	//void Player::moveRight() {

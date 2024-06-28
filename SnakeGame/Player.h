@@ -43,7 +43,6 @@ namespace SnakeGame {
 
 		PlayerDirection direction_ = PlayerDirection::Right;
 		sf::Sprite sprite_;
-		sf::RectangleShape background_;
 
 		Resources& resources_;
 	};

@@ -17,6 +17,7 @@ namespace SnakeGame {
 		Pause,
 		GameOver,
 		LeaderBoard,
+		DifficulityLevelChoose,
 		Options,
 		ExitDialog,
 	};

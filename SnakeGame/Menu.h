@@ -11,7 +11,8 @@ namespace SnakeGame {
 	public:
 		Menu(Resources& resources) : resources_(resources) {}
 
-		void init(std::string menuName, std::vector<std::string>& allButtons, float buttonSize, sf::Color colorOfButtons, int menuId);
+		void init(std::string menuName, std::vector<std::string>& allButtons, 
+				float buttonSize, sf::Color colorOfButtons, int menuId);
 		void moveUp();
 		void moveDown();
 
@@ -28,8 +29,8 @@ namespace SnakeGame {
 
 		std::vector<sf::Text> buttons_;
 		sf::Text menuName_;
-		sf::Color buttonsColor_;
-		sf::Color choosenButtonColor_ = sf::Color::Green;
+		sf::Color mainButtonColor_ = sf::Color::White;
+		sf::Color chosenButtonColor_ = sf::Color::Green;
 		sf::Sprite backgroundSprite_;
 
 		Resources& resources_;

@@ -20,11 +20,14 @@ namespace SnakeGame {
 
 	private:
 		void initBackground(Resources& resources);
-
+	
 		sf::RenderWindow& window_;
 		Resources& resources_;
 
+		sf::Texture background_;
+
 		Menu mainMenu_;
+		Menu difficulityLevelMenu_;
 		Menu optionsMenu_;
 		Menu exitMenu_;
 		Menu pauseMenu_;
