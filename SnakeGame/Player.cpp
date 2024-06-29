@@ -120,7 +120,7 @@ namespace SnakeGame {
 	//}
 
 	//void DrawPlayer(Player& player, sf::RenderWindow& window) {
-	//	window.draw(player.getBackground());
+	//	
 	//	player.setSpritePosition(player.position_.x, player.position_.y);
 	//	window.draw(player.getSprite());
 

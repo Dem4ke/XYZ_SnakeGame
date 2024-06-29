@@ -6,14 +6,14 @@ namespace SnakeGame {
 		: resources_(resources), window_(window),
 		mainMenu_(resources), difficulityLevelMenu_(resources), 
 		optionsMenu_(resources), exitMenu_(resources), 
-		pauseMenu_(resources), gameOverMenu_(resources), 
+		pauseMenu_(resources), gameOverMenu_(resources)/*, 
 		player_(resources), apple_(resources),
 		rock_(resources), leaderBoard_(resources),
-		UI_(resources) {}
+		UI_(resources)*/ {}
 
 	void Game::initGame() {
 		std::vector<std::string> mainButtons = { "Play game", "Difficulity level", "Leader board", "Options", "Exit" };
-		std::vector<std::string> dufficulityLevelButtons = { "Easy", "Medium", "Hard" };
+		std::vector<std::string> dufficulityLevelButtons = { "Easy", "Harder than Easy", "Medium", "Pussy hard", "Die hard" };
 		std::vector<std::string> optionsButtons = { "Acceleration: On", "Infinite apples: On" };
 		std::vector<std::string> exitButtons = { "Yes", "No" };
 		std::vector<std::string> pauseButtons = { "Yes", "No" };
@@ -34,6 +34,12 @@ namespace SnakeGame {
 
 		//// User interface initialization (size of button)
 		//UI_.init(20.f);
+		
+		// Start to play background music
+		PlayBackMusic(resources_);
+
+		// Initialization of background of the game
+		initBackground();
 
 		restartGame();
 	}
@@ -41,7 +47,7 @@ namespace SnakeGame {
 	void Game::restartGame() {
 		// Reset game state 
 		gameStates_.restartGameState();
-
+		
 		// Player initialization (size of player, speed)
 		//player_.init(30.f, 100.f);
 
@@ -58,8 +64,12 @@ namespace SnakeGame {
 
 	// Update menu states, it works only with Event
 	void Game::updateMenu(sf::Event& event) {
+		
 		if (gameStates_.getCurrentGameState() == GameStateType::MainMenu) {
 			MainMenuMovement(mainMenu_, gameStates_, event);
+		}
+		else if (gameStates_.getCurrentGameState() == GameStateType::DifficulityLevelChoose) {
+			DiffLvlMenuMovement(difficulityLevelMenu_, gameStates_, event);
 		}
 		else if (gameStates_.getCurrentGameState() == GameStateType::Options) {
 			OptionsMenuMovement(optionsMenu_, gameStates_, event);
@@ -131,6 +141,9 @@ namespace SnakeGame {
 		if (gameStates_.getCurrentGameState() == GameStateType::MainMenu) {
 			DrawMenu(mainMenu_, window_);
 		}
+		else if (gameStates_.getCurrentGameState() == GameStateType::DifficulityLevelChoose) {
+			DrawMenu(difficulityLevelMenu_, window_);
+		}
 		else if (gameStates_.getCurrentGameState() == GameStateType::Options) {
 			DrawMenu(optionsMenu_, window_);
 		}
@@ -151,14 +164,16 @@ namespace SnakeGame {
 	/*		DrawPlayer(player_, window_);
 			DrawRocks(fieldOfRocks_, window_);
 			DrawApples(fieldOfApples_, window_);
-			DrawUI(UI_, window_);*/
+			DrawUI(UI_, window_);
+			*/
+			window_.draw(gameBackSprite_);
+			
 		}
 	}
 
-	void Game::initBackground(Resources& resources) {
+	void Game::initBackground() {
 		// Initialization of background of the game
-		background_.setSize(sf::Vector2f(resources_.getWindowWidth(), resources_.getWindowHeight()));
-		background_.setFillColor(sf::Color::Black);
-		background_.setPosition(0.f, 0.f);
+		SetSpriteSize(gameBackSprite_, resources_.getWindowWidth(), resources_.getWindowHeight());
+		gameBackSprite_.setColor(gameBackColor_);
 	}
 }

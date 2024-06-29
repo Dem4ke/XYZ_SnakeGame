@@ -20,9 +20,14 @@ namespace SnakeGame {
 
 	// Load sounds from resources path
 	void Resources::setSounds() {
+		// Little sounds
 		assert(menuMove.loadFromFile(resourcesPath_ + "Theevilsocks__menu-hover.wav"));
 		assert(appleEatenSound.loadFromFile(resourcesPath_ + "AppleEat.wav"));
 		assert(gameOverSound.loadFromFile(resourcesPath_ + "Maodin204__Lose.wav"));
+		assert(hitSound.loadFromFile(resourcesPath_ + "Owlstorm__Snake_hit.wav"));
+
+		// Long sounds or background music (not loads file but opens it for a whole session)
+		assert(backSound.openFromFile(resourcesPath_ + "Clinthammer__Background_Music.wav"));
 	}
 
 	// Load fonts from resources path
@@ -66,5 +71,17 @@ namespace SnakeGame {
 		resources.sound.setBuffer(resources.gameOverSound);
 		resources.sound.setVolume(5.f);
 		resources.sound.play();
+	}
+
+	// Start playing background music 
+	void PlayBackMusic(Resources& resources) {
+		resources.backSound.play();
+		resources.backSound.setVolume(5.f);
+		resources.backSound.setLoop(true);
+	}
+
+	// Stop playing background music
+	void StopBackMusic(Resources& resources) {
+		resources.backSound.pause();
 	}
 }

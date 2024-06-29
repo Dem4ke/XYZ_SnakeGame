@@ -19,12 +19,13 @@ namespace SnakeGame {
 		void drawGame();
 
 	private:
-		void initBackground(Resources& resources);
+		void initBackground();
 	
 		sf::RenderWindow& window_;
 		Resources& resources_;
 
-		sf::Texture background_;
+		sf::Sprite gameBackSprite_;
+		sf::Color gameBackColor_ = sf::Color::Blue;
 
 		Menu mainMenu_;
 		Menu difficulityLevelMenu_;

@@ -28,7 +28,9 @@ namespace SnakeGame {
 		sf::SoundBuffer menuMove;
 		sf::SoundBuffer appleEatenSound;
 		sf::SoundBuffer gameOverSound;
+		sf::SoundBuffer hitSound;
 
+		sf::Music backSound;
 		sf::Sound sound;
 		sf::Font font;
 
@@ -43,4 +45,6 @@ namespace SnakeGame {
 	void MenuMovementSound(Resources& resources);
 	void AppleEatenSound(Resources& resources);
 	void GameOverSound(Resources& resources);
+	void PlayBackMusic(Resources& resources);
+	void StopBackMusic(Resources& resources);
 }

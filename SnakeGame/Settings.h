@@ -4,9 +4,13 @@
 
 namespace SnakeGame {
 
-	enum GameOptions {
-		isApplesInfinite = 1 << 0,
-		isPlayerAccelerated = 1 << 1,
+	enum class DifficultyLevel {
+		None = 0,
+		Easy,
+		HarderThanEasy,
+		Medium,
+		LessThanHard,
+		Hard,
 	};
 
 	enum class GameStateType {
@@ -37,13 +41,19 @@ namespace SnakeGame {
 		int getNumOfApples() const;
 		GameStateType getCurrentGameState() const;
 
+		DifficultyLevel getCurrentDiffLvl() const;
+
 	private:
-		char gameSettings_ = 3;
+		DifficultyLevel diffLvl_ = DifficultyLevel::Easy;
 
 		int eatenApples_ = 0;
 		int numOfApples_ = 20;
 
 		GameStateType gameStateType = GameStateType::None;
 		std::vector<GameStateType> gameStatesStack;
+	};
+
+	class DifficultyOfGame {
+
 	};
 }

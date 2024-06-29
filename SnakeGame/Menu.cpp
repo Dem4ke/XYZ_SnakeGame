@@ -3,8 +3,8 @@
 namespace SnakeGame {
 
 	// Initialization of all menu buttons
-	void Menu::init(std::string menuName, std::vector<std::string>& allButtons, 
-					float buttonSize, sf::Color colorOfButtons, int menuId) {
+	void Menu::init(std::string menuName, std::vector<std::string>& allButtons,
+		float buttonSize, sf::Color colorOfButtons, int menuId) {
 
 		float posX = resources_.getWindowWidth() / 2.f;
 		float posY = resources_.getWindowHeight() / 3.f;
@@ -90,9 +90,21 @@ namespace SnakeGame {
 
 	sf::Sprite Menu::getBackground() const { return backgroundSprite_; }
 
-	void Menu::changeButton(int num, std::string change) { buttons_[num].setString(change); }
+	sf::Keyboard::Key Menu::getUpKey() const { return upKey_; }
 
-	// LEADER BOAED INITIALIZATION
+	sf::Keyboard::Key Menu::getDownKey() const { return downKey_; }
+
+	sf::Keyboard::Key Menu::getLeftKey() const { return leftKey_; }
+
+	sf::Keyboard::Key Menu::getRightKey() const { return rightKey_; }
+
+	sf::Keyboard::Key Menu::getEscapeKey() const { return escapeKey_; }
+
+	sf::Keyboard::Key Menu::getEnterKey() const { return enterKey_; }
+
+	void Menu::changeButton(int num, std::string newButton) { buttons_[num].setString(newButton); }
+
+	// LEADER BOARD INITIALIZATION
 
 	//void LeaderBoard::init(std::string menuName, float buttonSize, GameStates& settings) {
 	//	posX_ = resources_.getWindowWidth() / 2.f;
@@ -159,28 +171,28 @@ namespace SnakeGame {
 		}
 	}*/
 
-	size_t LeaderBoard::getPositionsCount() const { return liderBoard_.size(); }
+	/*size_t LeaderBoard::getPositionsCount() const { return liderBoard_.size(); }
 
 	sf::Text LeaderBoard::getName(int num) const { return liderBoard_[num].first; }
 
 	sf::Text LeaderBoard::getScore(int num) const { return liderBoard_[num].second; }
 
-	sf::Text LeaderBoard::getGeneralName() const { return menuName_; }
+	sf::Text LeaderBoard::getGeneralName() const { return menuName_; }*/
 
 	// FUNCTIONS
 
 	void MainMenuMovement(Menu& mainMenu, GameStates& gameStates, const sf::Event& event) {
 		if (event.type == sf::Event::KeyPressed) {
-			if (event.key.code == sf::Keyboard::Up) {
+			if (event.key.code == mainMenu.getUpKey()) {
 				mainMenu.moveUp();
 			}
-			else if (event.key.code == sf::Keyboard::Down) {
+			else if (event.key.code == mainMenu.getDownKey()) {
 				mainMenu.moveDown();
 			}
-			else if (event.key.code == sf::Keyboard::Escape) {
+			else if (event.key.code == mainMenu.getEscapeKey()) {
 				gameStates.pushGameState(GameStateType::ExitDialog);
 			}
-			else if (event.key.code == sf::Keyboard::Enter) {
+			else if (event.key.code == mainMenu.getEnterKey()) {
 				if (mainMenu.getSelectedButton() == 0) {
 					gameStates.pushGameState(GameStateType::Game);
 				}
@@ -195,6 +207,37 @@ namespace SnakeGame {
 				}
 				else if (mainMenu.getSelectedButton() == 4) {
 					gameStates.pushGameState(GameStateType::ExitDialog);
+				}
+			}
+		}
+	}
+
+	void DiffLvlMenuMovement(Menu& diffLvlChooseMenu, GameStates& gameStates, const sf::Event& event) {
+		if (event.type == sf::Event::KeyPressed) {
+			if (event.key.code == diffLvlChooseMenu.getUpKey()) {
+				diffLvlChooseMenu.moveUp();
+			} 
+			else if (event.key.code == diffLvlChooseMenu.getDownKey()) {
+				diffLvlChooseMenu.moveDown();
+			}
+			else if (event.key.code == diffLvlChooseMenu.getEscapeKey()) {
+				gameStates.popGameState();
+			}
+			else if (event.key.code == diffLvlChooseMenu.getEnterKey()) {
+				if (diffLvlChooseMenu.getSelectedButton() == 0) {
+					
+				}
+				else if (diffLvlChooseMenu.getSelectedButton() == 1) {
+				
+				}
+				else if (diffLvlChooseMenu.getSelectedButton() == 2) {
+
+				}
+				else if (diffLvlChooseMenu.getSelectedButton() == 3) {
+
+				}
+				else if (diffLvlChooseMenu.getSelectedButton() == 4) {
+
 				}
 			}
 		}
@@ -238,16 +281,16 @@ namespace SnakeGame {
 
 	void ExitMenuMovement(Menu& exitMenu, GameStates& gameStates, const sf::Event& event, sf::RenderWindow& window) {
 		if (event.type == sf::Event::KeyPressed) {
-			if (event.key.code == sf::Keyboard::Up) {
+			if (event.key.code == exitMenu.getUpKey()) {
 				exitMenu.moveUp();
 			}
-			else if (event.key.code == sf::Keyboard::Down) {
+			else if (event.key.code == exitMenu.getDownKey()) {
 				exitMenu.moveDown();
 			}
-			else if (event.key.code == sf::Keyboard::Escape) {
+			else if (event.key.code == exitMenu.getEscapeKey()) {
 				gameStates.popGameState();
 			}
-			else if (event.key.code == sf::Keyboard::Enter) {
+			else if (event.key.code == exitMenu.getEnterKey()) {
 				if (exitMenu.getSelectedButton() == 0) {
 					window.close();
 					return;
@@ -263,22 +306,25 @@ namespace SnakeGame {
 		if (event.type == sf::Event::KeyPressed) {
 			if (event.key.code == sf::Keyboard::Escape) {
 				gameStates.popGameState();
+			} 
+			else if (event.key.code == sf::Keyboard::B) {
+				gameStates.popGameState();
 			}
 		}
 	}
 
 	void PauseMenuMovement(Menu& pauseMenu, GameStates& gameStates, const sf::Event& event) {
 		if (event.type == sf::Event::KeyPressed) {
-			if (event.key.code == sf::Keyboard::Up) {
+			if (event.key.code == pauseMenu.getUpKey()) {
 				pauseMenu.moveUp();
 			}
-			else if (event.key.code == sf::Keyboard::Down) {
+			else if (event.key.code == pauseMenu.getDownKey()) {
 				pauseMenu.moveDown();
 			}
-			else if (event.key.code == sf::Keyboard::Escape) {
+			else if (event.key.code == pauseMenu.getEscapeKey()) {
 				gameStates.popGameState();
 			}
-			else if (event.key.code == sf::Keyboard::Enter) {
+			else if (event.key.code == pauseMenu.getEnterKey()) {
 				if (pauseMenu.getSelectedButton() == 0) {
 					gameStates.pushGameState(GameStateType::GameReset);
 				}
@@ -291,17 +337,19 @@ namespace SnakeGame {
 
 	void GameOverMenuMovement(Menu& gameOverMenu, GameStates& gameStates, const sf::Event& event) {
 		if (event.type == sf::Event::KeyPressed) {
-			if (event.key.code == sf::Keyboard::Enter) {
+			if (event.key.code == gameOverMenu.getEnterKey()) {
 				gameStates.pushGameState(GameStateType::GameReset);
 			}
-			else if (event.key.code == sf::Keyboard::Escape) {
+			else if (event.key.code == gameOverMenu.getEscapeKey()) {
 				gameStates.pushGameState(GameStateType::GameReset);
 			}
 		}
 	}
 
 	void ExitInPauseMenu(GameStates& gameStates) {
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape) 
+			|| sf::Keyboard::isKeyPressed(sf::Keyboard::B)) {
+
 			gameStates.pushGameState(GameStateType::Pause);
 		}
 	}
@@ -315,10 +363,10 @@ namespace SnakeGame {
 	}
 
 	void DrawLeaderBoard(LeaderBoard& leaderBoard, sf::RenderWindow& window) {
-		window.draw(leaderBoard.getGeneralName());
+		/*window.draw(leaderBoard.getGeneralName());
 		for (int i = 0, it = leaderBoard.getPositionsCount(); i < it; ++i) {
 			window.draw(leaderBoard.getName(i));
 			window.draw(leaderBoard.getScore(i));
-		}
+		}*/
 	}
 }

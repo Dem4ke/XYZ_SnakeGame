@@ -22,7 +22,14 @@ namespace SnakeGame {
 		sf::Text getGeneralName() const;
 		sf::Sprite getBackground() const;
 
-		void changeButton(int num, std::string change);
+		sf::Keyboard::Key getUpKey() const;
+		sf::Keyboard::Key getDownKey() const;
+		sf::Keyboard::Key getLeftKey() const;
+		sf::Keyboard::Key getRightKey() const;
+		sf::Keyboard::Key getEscapeKey() const;
+		sf::Keyboard::Key getEnterKey() const;
+
+		void changeButton(int num, std::string newButton);
 
 	private:
 		int selectedButton_ = 0;
@@ -32,6 +39,13 @@ namespace SnakeGame {
 		sf::Color mainButtonColor_ = sf::Color::White;
 		sf::Color chosenButtonColor_ = sf::Color::Green;
 		sf::Sprite backgroundSprite_;
+
+		sf::Keyboard::Key upKey_ = sf::Keyboard::W;
+		sf::Keyboard::Key downKey_ = sf::Keyboard::S;
+		sf::Keyboard::Key leftKey_ = sf::Keyboard::A;
+		sf::Keyboard::Key rightKey_ = sf::Keyboard::D;
+		sf::Keyboard::Key escapeKey_ = sf::Keyboard::B;
+		sf::Keyboard::Key enterKey_ = sf::Keyboard::Enter;
 
 		Resources& resources_;
 	};
@@ -64,13 +78,17 @@ namespace SnakeGame {
 		Resources& resources_;
 	};
 
+	// Movement in menu 
 	void MainMenuMovement(Menu& mainMenu, GameStates& settings, const sf::Event& event);
+	void DiffLvlMenuMovement(Menu& diffLvlChooseMenu, GameStates& gameStates, const sf::Event& event);
 	void OptionsMenuMovement(Menu& optionsMenu, GameStates& settings, const sf::Event& event);
 	void ExitMenuMovement(Menu& exitMenu, GameStates& settings, const sf::Event& event, sf::RenderWindow& window);
 	void PauseMenuMovement(Menu& pauseMenu, GameStates& settings, const sf::Event& event);
 	void GameOverMenuMovement(Menu& gameOverMenu, GameStates& settings, const sf::Event& event);
 	void LeaderBoardMovement(LeaderBoard& leaderBoard, GameStates& settings, const sf::Event& event);
 	void ExitInPauseMenu(GameStates& settings);
+
+	// Draw menu
 	void DrawMenu(Menu& mainMenu, sf::RenderWindow& window);
 	void DrawLeaderBoard(LeaderBoard& leaderBoard, sf::RenderWindow& window);
 }
