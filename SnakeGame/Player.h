@@ -41,6 +41,8 @@ namespace SnakeGame {
 		float speed_ = 0.f;
 		float acceleration_ = 20.f;
 
+		std::vector<sf::Sprite> snake_;
+
 		PlayerDirection direction_ = PlayerDirection::Right;
 		sf::Sprite sprite_;
 
@@ -48,6 +50,6 @@ namespace SnakeGame {
 	};
 
 	void PlayerMove(Player& player, const float& deltaTime);
-	void OutOfWindow(Player& player, Resources& resources, GameStates& settings);
+	void OutOfWindow(Player& player, Resources& resources, GameState& settings);
 	void DrawPlayer(Player& player, sf::RenderWindow& window);
 }

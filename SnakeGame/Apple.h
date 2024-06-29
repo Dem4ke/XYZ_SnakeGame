@@ -27,9 +27,9 @@ namespace SnakeGame {
 	};
 
 	void ApplesFieldInit(Apple& apple, std::vector<Apple>& fieldOfApples, float size, int num);
-	void InfApplesWithNoAcc(std::vector<Apple>& fieldOfApples, Player& player, Resources& resources, GameStates& settings, UI& UI);
-	void InfApplesWithAcc(std::vector<Apple>& fieldOfApples, Player& player, Resources& resources, GameStates& settings, UI& UI);
-	void LimApplesWithNoAcc(std::vector<Apple>& fieldOfApples, Player& player, Resources& resources, GameStates& settings, UI& UI);
-	void LimApplesWithAcc(std::vector<Apple>& fieldOfApples, Player& player, Resources& resources, GameStates& settings, UI& UI);
+	void InfApplesWithNoAcc(std::vector<Apple>& fieldOfApples, Player& player, Resources& resources, GameState& settings, UI& UI);
+	void InfApplesWithAcc(std::vector<Apple>& fieldOfApples, Player& player, Resources& resources, GameState& settings, UI& UI);
+	void LimApplesWithNoAcc(std::vector<Apple>& fieldOfApples, Player& player, Resources& resources, GameState& settings, UI& UI);
+	void LimApplesWithAcc(std::vector<Apple>& fieldOfApples, Player& player, Resources& resources, GameState& settings, UI& UI);
 	void DrawApples(std::vector<Apple>& fieldOfApples, sf::RenderWindow& window);
 }

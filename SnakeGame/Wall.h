@@ -22,6 +22,6 @@ namespace SnakeGame {
 	};
 
 	void RocksFieldInit(Rock& rock, std::vector<Rock>& fieldOfRocks, float size, int num);
-	void RockCollision(std::vector<Rock>& fieldOfRocks, Player& player, Resources& resources, GameStates& settings);
+	void RockCollision(std::vector<Rock>& fieldOfRocks, Player& player, Resources& resources, GameState& settings);
 	void DrawRocks(std::vector<Rock>& fieldOfRocks, sf::RenderWindow& window);
 }

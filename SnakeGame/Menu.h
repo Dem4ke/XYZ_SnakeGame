@@ -31,6 +31,12 @@ namespace SnakeGame {
 
 		void changeButton(int num, std::string newButton);
 
+		void chooseButtonSound() const;
+		void continueBackMusic() const;
+		void stopBackMusic() const;
+		void soundsOn() const;
+		void soundsOff() const;
+
 	private:
 		int selectedButton_ = 0;
 
@@ -54,8 +60,8 @@ namespace SnakeGame {
 	public:
 		LeaderBoard(Resources& resources) : resources_(resources) {}
 
-		void init(std::string menuName, float buttonSize, GameStates& settings);
-		void sortTable(GameStates& settings);
+		void init(std::string menuName, float buttonSize, GameState& settings);
+		void sortTable(GameState& settings);
 
 		size_t getPositionsCount() const;
 		sf::Text getName(int num) const;
@@ -79,14 +85,14 @@ namespace SnakeGame {
 	};
 
 	// Movement in menu 
-	void MainMenuMovement(Menu& mainMenu, GameStates& settings, const sf::Event& event);
-	void DiffLvlMenuMovement(Menu& diffLvlChooseMenu, GameStates& gameStates, const sf::Event& event);
-	void OptionsMenuMovement(Menu& optionsMenu, GameStates& settings, const sf::Event& event);
-	void ExitMenuMovement(Menu& exitMenu, GameStates& settings, const sf::Event& event, sf::RenderWindow& window);
-	void PauseMenuMovement(Menu& pauseMenu, GameStates& settings, const sf::Event& event);
-	void GameOverMenuMovement(Menu& gameOverMenu, GameStates& settings, const sf::Event& event);
-	void LeaderBoardMovement(LeaderBoard& leaderBoard, GameStates& settings, const sf::Event& event);
-	void ExitInPauseMenu(GameStates& settings);
+	void MainMenuMovement(Menu& mainMenu, GameState& gameState, const sf::Event& event);
+	void DiffLvlMenuMovement(Menu& diffLvlChooseMenu, GameState& gameState, const sf::Event& event);
+	void OptionsMenuMovement(Menu& optionsMenu, GameState& gameState, const sf::Event& event);
+	void ExitMenuMovement(Menu& exitMenu, GameState& gameState, const sf::Event& event, sf::RenderWindow& window);
+	void PauseMenuMovement(Menu& pauseMenu, GameState& gameState, const sf::Event& event);
+	void GameOverMenuMovement(Menu& gameOverMenu, GameState& gameState, const sf::Event& event);
+	void LeaderBoardMovement(LeaderBoard& leaderBoard, GameState& gameState, const sf::Event& event);
+	void ExitInPauseMenu(GameState& gameState);
 
 	// Draw menu
 	void DrawMenu(Menu& mainMenu, sf::RenderWindow& window);

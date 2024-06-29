@@ -14,7 +14,6 @@ namespace SnakeGame {
 		// id: 0 - empty, 1 - main background
 		switch (menuId) {
 		case(0):
-			backgroundSprite_.setColor(sf::Color::Black);
 			break;
 		case(1):
 			backgroundSprite_.setTexture(resources_.mainMenuBackground);
@@ -63,6 +62,9 @@ namespace SnakeGame {
 				selectedButton_ = buttons_.size() - 1;
 			}
 			buttons_[selectedButton_].setFillColor(chosenButtonColor_);
+
+			// play sound of menu buttons change
+			MenuMovementSound(resources_);
 		}
 	}
 
@@ -77,6 +79,9 @@ namespace SnakeGame {
 				selectedButton_ = 0;
 			}
 			buttons_[selectedButton_].setFillColor(chosenButtonColor_);
+
+			// play sound of menu buttons change
+			MenuMovementSound(resources_);
 		}
 	}
 
@@ -103,6 +108,20 @@ namespace SnakeGame {
 	sf::Keyboard::Key Menu::getEnterKey() const { return enterKey_; }
 
 	void Menu::changeButton(int num, std::string newButton) { buttons_[num].setString(newButton); }
+
+	void Menu::chooseButtonSound() const { SoundOfChoose(resources_); }
+
+	void Menu::continueBackMusic() const { PlayBackMusic(resources_); }
+
+	void Menu::stopBackMusic() const { StopBackMusic(resources_); }
+
+	void Menu::soundsOn() const { 
+		SetSoundsVolume(resources_, 5.f);
+	}
+
+	void Menu::soundsOff() const {
+		SetSoundsVolume(resources_, 0.f);
+	}
 
 	// LEADER BOARD INITIALIZATION
 
@@ -181,7 +200,7 @@ namespace SnakeGame {
 
 	// FUNCTIONS
 
-	void MainMenuMovement(Menu& mainMenu, GameStates& gameStates, const sf::Event& event) {
+	void MainMenuMovement(Menu& mainMenu, GameState& gameState, const sf::Event& event) {
 		if (event.type == sf::Event::KeyPressed) {
 			if (event.key.code == mainMenu.getUpKey()) {
 				mainMenu.moveUp();
@@ -190,29 +209,35 @@ namespace SnakeGame {
 				mainMenu.moveDown();
 			}
 			else if (event.key.code == mainMenu.getEscapeKey()) {
-				gameStates.pushGameState(GameStateType::ExitDialog);
+				mainMenu.chooseButtonSound();
+				gameState.pushGameState(GameStateType::ExitDialog);
 			}
 			else if (event.key.code == mainMenu.getEnterKey()) {
 				if (mainMenu.getSelectedButton() == 0) {
-					gameStates.pushGameState(GameStateType::Game);
+					gameState.pushGameState(GameStateType::Game);
+					mainMenu.chooseButtonSound();
 				}
 				else if (mainMenu.getSelectedButton() == 1) {
-					gameStates.pushGameState(GameStateType::DifficulityLevelChoose);
+					gameState.pushGameState(GameStateType::DifficulityLevelChoose);
+					mainMenu.chooseButtonSound();
 				}
 				else if (mainMenu.getSelectedButton() == 2) {
-					gameStates.pushGameState(GameStateType::LeaderBoard);
+					gameState.pushGameState(GameStateType::LeaderBoard);
+					mainMenu.chooseButtonSound();
 				}
 				else if (mainMenu.getSelectedButton() == 3) {
-					gameStates.pushGameState(GameStateType::Options);
+					gameState.pushGameState(GameStateType::Options);
+					mainMenu.chooseButtonSound();
 				}
 				else if (mainMenu.getSelectedButton() == 4) {
-					gameStates.pushGameState(GameStateType::ExitDialog);
+					gameState.pushGameState(GameStateType::ExitDialog);
+					mainMenu.chooseButtonSound();
 				}
 			}
 		}
 	}
 
-	void DiffLvlMenuMovement(Menu& diffLvlChooseMenu, GameStates& gameStates, const sf::Event& event) {
+	void DiffLvlMenuMovement(Menu& diffLvlChooseMenu, GameState& gameState, const sf::Event& event) {
 		if (event.type == sf::Event::KeyPressed) {
 			if (event.key.code == diffLvlChooseMenu.getUpKey()) {
 				diffLvlChooseMenu.moveUp();
@@ -221,65 +246,76 @@ namespace SnakeGame {
 				diffLvlChooseMenu.moveDown();
 			}
 			else if (event.key.code == diffLvlChooseMenu.getEscapeKey()) {
-				gameStates.popGameState();
+				diffLvlChooseMenu.chooseButtonSound();
+				gameState.popGameState();
 			}
 			else if (event.key.code == diffLvlChooseMenu.getEnterKey()) {
 				if (diffLvlChooseMenu.getSelectedButton() == 0) {
-					
+					gameState.setNewDifficulty(DifficultyLevel::Easy);
+					diffLvlChooseMenu.chooseButtonSound();
 				}
 				else if (diffLvlChooseMenu.getSelectedButton() == 1) {
-				
+					gameState.setNewDifficulty(DifficultyLevel::HarderThanEasy);
+					diffLvlChooseMenu.chooseButtonSound();
 				}
 				else if (diffLvlChooseMenu.getSelectedButton() == 2) {
-
+					gameState.setNewDifficulty(DifficultyLevel::Medium);
+					diffLvlChooseMenu.chooseButtonSound();
 				}
 				else if (diffLvlChooseMenu.getSelectedButton() == 3) {
-
+					gameState.setNewDifficulty(DifficultyLevel::LessThanHard);
+					diffLvlChooseMenu.chooseButtonSound();
 				}
 				else if (diffLvlChooseMenu.getSelectedButton() == 4) {
-
+					gameState.setNewDifficulty(DifficultyLevel::Hard);
+					diffLvlChooseMenu.chooseButtonSound();
 				}
 			}
 		}
 	}
 
-	void OptionsMenuMovement(Menu& optionsMenu, GameStates& gameStates, const sf::Event& event) {
-		/*if (event.type == sf::Event::KeyPressed) {
-			if (event.key.code == sf::Keyboard::Up) {
+	void OptionsMenuMovement(Menu& optionsMenu, GameState& gameState, const sf::Event& event) {
+		if (event.type == sf::Event::KeyPressed) {
+			if (event.key.code == optionsMenu.getUpKey()) {
 				optionsMenu.moveUp();
 			}
-			else if (event.key.code == sf::Keyboard::Down) {
+			else if (event.key.code == optionsMenu.getDownKey()) {
 				optionsMenu.moveDown();
 			}
-			else if (event.key.code == sf::Keyboard::Escape) {
-				gameStates.popGameState();
+			else if (event.key.code == optionsMenu.getEscapeKey()) {
+				optionsMenu.chooseButtonSound();
+				gameState.popGameState();
 			}
-			else if (event.key.code == sf::Keyboard::Enter) {
+			else if (event.key.code == optionsMenu.getEnterKey()) {
 				if (optionsMenu.getSelectedButton() == 0) {
-					if (optionsMenu.getButton(0).getString() == "Acceleration: On") {
-						optionsMenu.changeButton(0, "Acceleration: Off");
-						settings.gameSettings &= ~(GameOptions::isPlayerAccelerated);
+					if (optionsMenu.getButton(0).getString() == "Music: On") {
+						optionsMenu.changeButton(0, "Music: Off");
+						optionsMenu.chooseButtonSound();
+						optionsMenu.stopBackMusic();
 					}
-					else if (optionsMenu.getButton(0).getString() == "Acceleration: Off") {
-						optionsMenu.changeButton(0, "Acceleration: On");
-						settings.gameSettings |= GameOptions::isPlayerAccelerated;
+					else if (optionsMenu.getButton(0).getString() == "Music: Off") {
+						optionsMenu.changeButton(0, "Music: On");
+						optionsMenu.chooseButtonSound();
+						optionsMenu.continueBackMusic();
 					}
 				}
 				else if (optionsMenu.getSelectedButton() == 1) {
-					if (optionsMenu.getButton(1).getString() == "Infinite apples: On") {
-						optionsMenu.changeButton(1, "Infinite apples: Off");
-						settings.gameSettings &= ~(GameOptions::isApplesInfinite);
+					if (optionsMenu.getButton(1).getString() == "Sounds: On") {
+						optionsMenu.changeButton(1, "Sounds: Off");
+						optionsMenu.chooseButtonSound();
+						optionsMenu.soundsOff();
 					}
-					else if (optionsMenu.getButton(1).getString() == "Infinite apples: Off") {
-						optionsMenu.changeButton(1, "Infinite apples: On");
-						settings.gameSettings |= GameOptions::isApplesInfinite;
+					else if (optionsMenu.getButton(1).getString() == "Sounds: Off") {
+						optionsMenu.changeButton(1, "Sounds: On");
+						optionsMenu.chooseButtonSound();
+						optionsMenu.soundsOn();
 					}
 				}
 			}
-		}*/
+		}
 	}
 
-	void ExitMenuMovement(Menu& exitMenu, GameStates& gameStates, const sf::Event& event, sf::RenderWindow& window) {
+	void ExitMenuMovement(Menu& exitMenu, GameState& gameState, const sf::Event& event, sf::RenderWindow& window) {
 		if (event.type == sf::Event::KeyPressed) {
 			if (event.key.code == exitMenu.getUpKey()) {
 				exitMenu.moveUp();
@@ -288,32 +324,35 @@ namespace SnakeGame {
 				exitMenu.moveDown();
 			}
 			else if (event.key.code == exitMenu.getEscapeKey()) {
-				gameStates.popGameState();
+				exitMenu.chooseButtonSound();
+				gameState.popGameState();
 			}
 			else if (event.key.code == exitMenu.getEnterKey()) {
 				if (exitMenu.getSelectedButton() == 0) {
+					exitMenu.chooseButtonSound();
 					window.close();
 					return;
 				}
 				else if (exitMenu.getSelectedButton() == 1) {
-					gameStates.popGameState();
+					exitMenu.chooseButtonSound();
+					gameState.popGameState();
 				}
 			}
 		}
 	}
 
-	void LeaderBoardMovement(LeaderBoard& leaderBoard, GameStates& gameStates, const sf::Event& event) {
-		if (event.type == sf::Event::KeyPressed) {
+	void LeaderBoardMovement(LeaderBoard& leaderBoard, GameState& gameState, const sf::Event& event) {
+		/*if (event.type == sf::Event::KeyPressed) {
 			if (event.key.code == sf::Keyboard::Escape) {
-				gameStates.popGameState();
+				gameState.popGameState();
 			} 
 			else if (event.key.code == sf::Keyboard::B) {
-				gameStates.popGameState();
+				gameState.popGameState();
 			}
-		}
+		}*/
 	}
 
-	void PauseMenuMovement(Menu& pauseMenu, GameStates& gameStates, const sf::Event& event) {
+	void PauseMenuMovement(Menu& pauseMenu, GameState& gameState, const sf::Event& event) {
 		if (event.type == sf::Event::KeyPressed) {
 			if (event.key.code == pauseMenu.getUpKey()) {
 				pauseMenu.moveUp();
@@ -322,35 +361,40 @@ namespace SnakeGame {
 				pauseMenu.moveDown();
 			}
 			else if (event.key.code == pauseMenu.getEscapeKey()) {
-				gameStates.popGameState();
+				pauseMenu.chooseButtonSound();
+				gameState.popGameState();
 			}
 			else if (event.key.code == pauseMenu.getEnterKey()) {
 				if (pauseMenu.getSelectedButton() == 0) {
-					gameStates.pushGameState(GameStateType::GameReset);
+					gameState.pushGameState(GameStateType::GameReset);
+					pauseMenu.chooseButtonSound();
 				}
 				else if (pauseMenu.getSelectedButton() == 1) {
-					gameStates.popGameState();
+					pauseMenu.chooseButtonSound();
+					gameState.popGameState();
 				}
 			}
 		}
 	}
 
-	void GameOverMenuMovement(Menu& gameOverMenu, GameStates& gameStates, const sf::Event& event) {
+	void GameOverMenuMovement(Menu& gameOverMenu, GameState& gameState, const sf::Event& event) {
 		if (event.type == sf::Event::KeyPressed) {
 			if (event.key.code == gameOverMenu.getEnterKey()) {
-				gameStates.pushGameState(GameStateType::GameReset);
+				gameOverMenu.chooseButtonSound(); 
+				gameState.pushGameState(GameStateType::GameReset);
 			}
 			else if (event.key.code == gameOverMenu.getEscapeKey()) {
-				gameStates.pushGameState(GameStateType::GameReset);
+				gameOverMenu.chooseButtonSound();
+				gameState.pushGameState(GameStateType::GameReset);
 			}
 		}
 	}
 
-	void ExitInPauseMenu(GameStates& gameStates) {
+	void ExitInPauseMenu(GameState& gameState) {
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape) 
 			|| sf::Keyboard::isKeyPressed(sf::Keyboard::B)) {
 
-			gameStates.pushGameState(GameStateType::Pause);
+			gameState.pushGameState(GameStateType::Pause);
 		}
 	}
 

@@ -29,8 +29,9 @@ namespace SnakeGame {
 		sf::SoundBuffer appleEatenSound;
 		sf::SoundBuffer gameOverSound;
 		sf::SoundBuffer hitSound;
+		sf::SoundBuffer soundOfChoose;
 
-		sf::Music backSound;
+		sf::Music backMusic;
 		sf::Sound sound;
 		sf::Font font;
 
@@ -40,11 +41,17 @@ namespace SnakeGame {
 		const std::string resourcesPath_ = "Resources/";
 	};
 
+	// Sprites
 	void SetSpriteSize(sf::Sprite& sprite, float desiredWidht, float desiredHeight);
 	void SetSpriteRelativeOrigin(sf::Sprite& sprite, float originX, float originY);
+	
+	// Sounds and music
+	void SetSoundsVolume(Resources& resources, float volume);
+	void SetMusicVolume(Resources& resources, float volume);
 	void MenuMovementSound(Resources& resources);
 	void AppleEatenSound(Resources& resources);
 	void GameOverSound(Resources& resources);
+	void SoundOfChoose(Resources& resources);
 	void PlayBackMusic(Resources& resources);
 	void StopBackMusic(Resources& resources);
 }
