@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Settings.h"
+#include "GameStates.h"
 #include "Resources.h"
 
 namespace SnakeGame {

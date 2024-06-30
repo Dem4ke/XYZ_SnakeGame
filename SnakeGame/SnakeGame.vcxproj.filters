@@ -31,13 +31,16 @@
     <ClCompile Include="Resources.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
-    <ClCompile Include="Settings.cpp">
+    <ClCompile Include="GameStates.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
     <ClCompile Include="UI.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
     <ClCompile Include="Wall.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="GameField.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
   </ItemGroup>
@@ -63,10 +66,13 @@
     <ClInclude Include="Resources.h">
       <Filter>Headers</Filter>
     </ClInclude>
-    <ClInclude Include="Settings.h">
+    <ClInclude Include="GameStates.h">
       <Filter>Headers</Filter>
     </ClInclude>
     <ClInclude Include="UI.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="GameField.h">
       <Filter>Headers</Filter>
     </ClInclude>
   </ItemGroup>

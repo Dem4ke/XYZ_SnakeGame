@@ -6,10 +6,10 @@ namespace SnakeGame {
 		: resources_(resources), window_(window),
 		mainMenu_(resources), difficultyLevelMenu_(resources), 
 		optionsMenu_(resources), exitMenu_(resources), 
-		pauseMenu_(resources), gameOverMenu_(resources)/*, 
-		player_(resources), apple_(resources),
+		pauseMenu_(resources), gameOverMenu_(resources), 
+		player_(resources), apple_(resources),/*
 		rock_(resources), leaderBoard_(resources),
-		UI_(resources)*/ {}
+		UI_(resources),*/ gameField_(resources, player_, apple_) {}
 
 	void Game::initGame() {
 		std::vector<std::string> mainButtons = { "Play game", "Difficulity level", "Leader board", "Options", "Exit" };
@@ -43,7 +43,6 @@ namespace SnakeGame {
 		SetSoundsVolume(resources_, 5.f);
 
 		// Initialization of background of the game
-		initBackground();
 
 		restartGame();
 	}
@@ -105,8 +104,8 @@ namespace SnakeGame {
 			//// Collision with rocks
 			//RockCollision(fieldOfRocks_, player_, resources_, gameState_);
 
-			//// Pause menu maker
-			//ExitInPauseMenu(gameState_);
+			// Pause menu maker
+			ExitInPauseMenu(gameState_);
 
 			// Differents versions of collision with apples
 	/*		if ((gameState_.gameSettings & GameOptions::isApplesInfinite) &&
@@ -135,10 +134,10 @@ namespace SnakeGame {
 	void Game::gameOver(const float& deltaTime) {
 		/*if (gameState_.getCurrentGameState() == GameStateType::GameOver) {
 			leaderBoard_.sortTable(gameState_);
-		}
-		else if (gameState_.getCurrentGameState() == GameStateType::GameReset) {
+		
+		else */ if (gameState_.getCurrentGameState() == GameStateType::GameReset) {
 			restartGame();
-		}*/
+		}
 	}
 
 	void Game::drawGame() {
@@ -170,8 +169,8 @@ namespace SnakeGame {
 			DrawApples(fieldOfApples_, window_);
 			DrawUI(UI_, window_);
 			*/
-			window_.draw(gameBackSprite_);
-			
+		//	window_.draw(gameBackSprite_);
+			DrawGameField(gameField_, window_);
 		}
 	}
 

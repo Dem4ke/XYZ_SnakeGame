@@ -14,7 +14,9 @@ namespace SnakeGame {
 		// id: 0 - empty, 1 - main background
 		switch (menuId) {
 		case(0):
-			break;
+			backgroundSprite_.setTexture(resources_.mainMenuBackground);
+			backgroundSprite_.setColor(sf::Color(255, 255, 255, 128));
+			break; // исправить на пустой бэк
 		case(1):
 			backgroundSprite_.setTexture(resources_.mainMenuBackground);
 			break;
@@ -392,7 +394,7 @@ namespace SnakeGame {
 
 	void ExitInPauseMenu(GameState& gameState) {
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape) 
-			|| sf::Keyboard::isKeyPressed(sf::Keyboard::B)) {
+			|| sf::Keyboard::isKeyPressed(sf::Keyboard::P)) {
 
 			gameState.pushGameState(GameStateType::Pause);
 		}

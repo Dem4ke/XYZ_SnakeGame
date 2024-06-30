@@ -1,5 +1,6 @@
 #pragma once
 
+#include "GameField.h"
 #include "Menu.h"
 #include "Player.h"
 #include "Apple.h"
@@ -26,6 +27,7 @@ namespace SnakeGame {
 
 		sf::Sprite gameBackSprite_;
 		sf::Color gameBackColor_ = sf::Color::Blue;
+		sf::RectangleShape rect_;
 
 		Menu mainMenu_;
 		Menu difficultyLevelMenu_;
@@ -35,13 +37,15 @@ namespace SnakeGame {
 		Menu gameOverMenu_;
 		//LeaderBoard leaderBoard_;
 
-		//Player player_;
-		//Apple apple_;
+		Player player_;
+		Apple apple_;
 		//Rock rock_;
 
 		//UI UI_;
 
 		GameState gameState_;
+
+		GameField gameField_;
 
 		//std::vector<Apple> fieldOfApples_;
 		//std::vector<Rock> fieldOfRocks_;

@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Resources.h"
-#include "Settings.h"
+#include "GameStates.h"
 #include "Engine.h"
 
 namespace SnakeGame {
@@ -40,8 +40,6 @@ namespace SnakeGame {
 		float size_ = 0.f;
 		float speed_ = 0.f;
 		float acceleration_ = 20.f;
-
-		std::vector<sf::Sprite> snake_;
 
 		PlayerDirection direction_ = PlayerDirection::Right;
 		sf::Sprite sprite_;

@@ -1,4 +1,4 @@
-#include "Settings.h"
+#include "GameStates.h"
 
 namespace SnakeGame {
 

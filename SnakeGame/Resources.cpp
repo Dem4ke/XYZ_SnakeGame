@@ -45,7 +45,7 @@ namespace SnakeGame {
 	// SPRITES
 
 	void SetSpriteSize(sf::Sprite& sprite, float desiredWidht, float desiredHeight) {
-		sf::FloatRect spriteRect = sprite.getLocalBounds(); // get sprite size from corner
+		sf::FloatRect spriteRect = sprite.getLocalBounds(); // get sprite size from the corner
 		sf::Vector2f scale = { desiredWidht / spriteRect.width, desiredHeight / spriteRect.height };
 		sprite.setScale(scale);
 	}
