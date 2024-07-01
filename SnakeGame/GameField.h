@@ -15,19 +15,18 @@ namespace SnakeGame {
 		void setSpritePosition(float x, float y);
 
 		void setObject(sf::Texture& texture);
+		void rotateSprite(float rotateDegree);
+
 		sf::Sprite getObjectSprite() const;
 		bool getInfo() const;
-		sf::Sprite sprite_;
+		
 	private:
 		float height_ = 0.f;
 		float width_ = 0.f;
 
-
 		bool isEmpty_ = true;
 
-		Position2D position_;
-
-	//	sf::Sprite sprite_;
+		sf::Sprite sprite_;
 	};
 
 	class GameField {
@@ -51,16 +50,6 @@ namespace SnakeGame {
 		Apple& apple_;
 		//Wall& wall;
 	};
-
-	// кажда€ €чейка хранит в себе данные о том что она
-	// сейчас отрисовывает и флаг возможности 
-	// по€влени€ в ней разных объектов
-	// например в зан€той €чейке не может быть
-	// отрисовано €блоко
-	// но в за€нтой €блоком может быть игрок
-	// который это €блоко съест
-
-	
 
 	void DrawGameField(GameField& gameField, sf::RenderWindow& window);
 }

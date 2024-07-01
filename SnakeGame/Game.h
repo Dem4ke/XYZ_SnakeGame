@@ -27,7 +27,6 @@ namespace SnakeGame {
 
 		sf::Sprite gameBackSprite_;
 		sf::Color gameBackColor_ = sf::Color::Blue;
-		sf::RectangleShape rect_;
 
 		Menu mainMenu_;
 		Menu difficultyLevelMenu_;
@@ -46,8 +45,5 @@ namespace SnakeGame {
 		GameState gameState_;
 
 		GameField gameField_;
-
-		//std::vector<Apple> fieldOfApples_;
-		//std::vector<Rock> fieldOfRocks_;
 	};
 }

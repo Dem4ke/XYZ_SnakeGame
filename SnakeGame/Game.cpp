@@ -43,6 +43,7 @@ namespace SnakeGame {
 		SetSoundsVolume(resources_, 5.f);
 
 		// Initialization of background of the game
+		initBackground();
 
 		restartGame();
 	}
@@ -164,18 +165,15 @@ namespace SnakeGame {
 	//		DrawLeaderBoard(leaderBoard_, window_);
 		}
 		else if (gameState_.getCurrentGameState() == GameStateType::Game) {
-	/*		DrawPlayer(player_, window_);
-			DrawRocks(fieldOfRocks_, window_);
-			DrawApples(fieldOfApples_, window_);
-			DrawUI(UI_, window_);
-			*/
-		//	window_.draw(gameBackSprite_);
+		//	DrawUI(UI_, window_);
+			window_.draw(gameBackSprite_);
 			DrawGameField(gameField_, window_);
 		}
 	}
 
 	void Game::initBackground() {
 		// Initialization of background of the game
+		gameBackSprite_.setTexture(resources_.gameBackground);
 		SetSpriteSize(gameBackSprite_, resources_.getWindowWidth(), resources_.getWindowHeight());
 		gameBackSprite_.setColor(gameBackColor_);
 	}

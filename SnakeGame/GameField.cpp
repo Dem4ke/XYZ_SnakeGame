@@ -7,13 +7,19 @@ namespace SnakeGame {
 	CellOfField::CellOfField(float height, float width) :
 		height_(height), width_(width) {}
 
+	// Set sprite's position
 	void CellOfField::setSpritePosition(float x, float y) {
 		sprite_.setPosition(x, y);
 	}
 
+	void CellOfField::rotateSprite(float rotateDegree) {
+		sprite_.setRotation(rotateDegree);
+	}
+	// Set sprite's texute, size and origin
 	void CellOfField::setObject(sf::Texture& texture) {
 		sprite_.setTexture(texture);
 		SetSpriteSize(sprite_, height_, width_);
+		SetSpriteRelativeOrigin(sprite_, 0.5f, 0.5f);
 	}
 
 	sf::Sprite CellOfField::getObjectSprite() const {
@@ -53,7 +59,9 @@ namespace SnakeGame {
 			// cols counter have to be less than cols
 			// rows counter have to be less than rows
 
-			cell.setSpritePosition(countOfCols * width, countOfRows * height);
+			// Sprite position is in center of a cell
+			cell.setSpritePosition(countOfCols * width + 0.5f * width, 
+								countOfRows * height + 0.5f * height);
 			field_.push_back(cell);
 
 			++countOfCols;
@@ -64,34 +72,41 @@ namespace SnakeGame {
 		}
 	}
 
-	// Set sprite in cell based on needs
+	// Set sprites on perimeter
 	void GameField::setPerimeterCellSprite() {
-		// Make a counters to count created cells
+		// Make a counters to count cells
 		int countOfCols = 0;
 		int countOfRows = 0;
 
 		// Set walls around field
-		for (int i = 0, end = getFieldSize(); i < end; ++i) {
-			if (countOfCols != cols - 1 && countOfRows == 0) {
-				field_[i].setObject(resources_.wallTexture);
-			} 
-			else if (countOfCols == cols - 1) {
-				field_[i].setObject(resources_.appleTexture);
+		for (int i = 0, end = getFieldSize(); i < end; ++i, ++countOfCols) {
+			if (countOfCols == cols) {
 				countOfCols = 0;
-				++countOfRows;	
+				++countOfRows;
 			}
-			else if (countOfCols == 0) {
-			//	field_[i].setObject(resources_.wallTexture);
+			
+			if (countOfCols == 0) {
+				field_[i].setObject(resources_.wallTexture);
+				field_[i].rotateSprite(90.f);
 			}
-			++countOfCols;
+			else if (countOfCols == cols - 1) {
+				field_[i].setObject(resources_.wallTexture);
+				field_[i].rotateSprite(270.f);
+			}
+			else if (countOfRows == 0) {
+				field_[i].setObject(resources_.wallTexture);
+				field_[i].rotateSprite(180.f);
+			}
+			else if (countOfRows == rows - 1) {
+				field_[i].setObject(resources_.wallTexture);
+			}
 		}
 	}
 
 	int GameField::getFieldSize() const { return cols * rows; }
 
 	sf::Sprite GameField::getSprite(int index) const {
-		sf::Sprite sprite = field_[index].getObjectSprite();
-		return sprite;
+		return field_[index].getObjectSprite();
 	}
 
 	// FUNCTIONS
