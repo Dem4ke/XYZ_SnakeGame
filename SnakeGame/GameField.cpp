@@ -26,7 +26,7 @@ namespace SnakeGame {
 		resources_(resources), player_(player), apple_(apple) {
 
 		init();
-		setCellSprite(); // change		
+		setPerimeterCellSprite(); // set all walls for perimetr of field		
 	}
 
 	// Initialization of game field
@@ -64,10 +64,26 @@ namespace SnakeGame {
 		}
 	}
 
-	// »«Ã≈Õ»“‹ Õ¿ Œ“–»—Œ¬ ” ¬—≈’ “≈ —”–
-	void GameField::setCellSprite() {
+	// Set sprite in cell based on needs
+	void GameField::setPerimeterCellSprite() {
+		// Make a counters to count created cells
+		int countOfCols = 0;
+		int countOfRows = 0;
+
+		// Set walls around field
 		for (int i = 0, end = getFieldSize(); i < end; ++i) {
-			field_[i].setObject(resources_.appleTexture);
+			if (countOfCols != cols - 1 && countOfRows == 0) {
+				field_[i].setObject(resources_.wallTexture);
+			} 
+			else if (countOfCols == cols - 1) {
+				field_[i].setObject(resources_.appleTexture);
+				countOfCols = 0;
+				++countOfRows;	
+			}
+			else if (countOfCols == 0) {
+			//	field_[i].setObject(resources_.wallTexture);
+			}
+			++countOfCols;
 		}
 	}
 

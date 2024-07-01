@@ -35,7 +35,7 @@ namespace SnakeGame {
 		GameField(Resources& resources, Player& player, Apple& apple);
 
 		void init();
-		void setCellSprite();
+		void setPerimeterCellSprite();
 
 		int getFieldSize() const;
 		sf::Sprite getSprite(int index) const;
