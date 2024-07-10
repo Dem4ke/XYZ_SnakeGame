@@ -1,35 +1,24 @@
 #pragma once
 
-#include "Player.h"
 #include "UI.h"
 
 namespace SnakeGame {
 
 	class Apple {
 	public:
-		Apple(Resources& resources) : resources_(resources) {}
+		Apple();
 
-		void init(float size);
-		void appleEaten();
-		void getRandomPosition();
+		void init(int cost = 2);
+		void setStatus(bool isExists);
+		void setPositionOnField(int position);
 
-		float getSize() const;
-		bool isAppleEaten() const;
-		sf::Sprite getSprite() const;
-
-		Position2D position_;
+		int getPositionOnField() const;
+		bool isAppleExists() const;
 
 	private:
-		float size_ = 0.f;
-		bool isAppleEaten_ = false;
-		sf::Sprite sprite_;
-		Resources& resources_;
-	};
+		int positionOnField_ = 0;
+		int cost_ = 0;
 
-	void ApplesFieldInit(Apple& apple, std::vector<Apple>& fieldOfApples, float size, int num);
-	void InfApplesWithNoAcc(std::vector<Apple>& fieldOfApples, Player& player, Resources& resources, GameState& settings, UI& UI);
-	void InfApplesWithAcc(std::vector<Apple>& fieldOfApples, Player& player, Resources& resources, GameState& settings, UI& UI);
-	void LimApplesWithNoAcc(std::vector<Apple>& fieldOfApples, Player& player, Resources& resources, GameState& settings, UI& UI);
-	void LimApplesWithAcc(std::vector<Apple>& fieldOfApples, Player& player, Resources& resources, GameState& settings, UI& UI);
-	void DrawApples(std::vector<Apple>& fieldOfApples, sf::RenderWindow& window);
+		bool isExists_ = false;
+	};
 }

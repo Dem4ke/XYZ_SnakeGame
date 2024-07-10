@@ -1,13 +1,23 @@
 #pragma once
 
-#include "Engine.h"
 #include "GameStates.h"
 #include "Resources.h"
 #include "Player.h"
 #include "Apple.h"
 #include "Wall.h"
 
+#include <cstdlib>
+
 namespace SnakeGame {
+
+	enum class objectType : short {
+		none = 0,
+		snakeHead,
+		snakeBody,
+		normalApple,
+		poisonedApple,
+		wall,
+	};
 
 	class CellOfField {
 	public:
@@ -15,17 +25,18 @@ namespace SnakeGame {
 
 		void setSpritePosition(float x, float y);
 
-		void setObject(sf::Texture& texture);
+		void setObject(sf::Texture& texture, objectType object);
+		void clear();
 		void rotateSprite(float rotateDegree);
 
 		sf::Sprite getObjectSprite() const;
-		bool getInfo() const;
+		objectType getObjectType() const;
 		
 	private:
 		float height_ = 0.f;
 		float width_ = 0.f;
 
-		bool isEmpty_ = true;
+		objectType indicator = objectType::none;
 
 		sf::Sprite sprite_;
 	};
@@ -35,17 +46,22 @@ namespace SnakeGame {
 		GameField(Resources& resources, GameState& gameState);
 
 		void init();
+		void reset();
 		void update(const float& deltaTime);
 
 		int getFieldSize() const;
 		sf::Sprite getSprite(int index) const;
 
 	private:
+		void cellInfoCheck();
 		void setPerimeterCellSprite();
-		void setPlayerCellSprite();
+		void setAppleCellSprite();
+		int getRandomAvaliblePosition();
 
-		int cols = 40;
-		int rows = 30;
+		int defTimer_ = 20;
+		int timer_ = 0;
+		int cols_ = 40;
+		int rows_ = 30;
 
 		std::vector<CellOfField> field_;
 
@@ -54,7 +70,6 @@ namespace SnakeGame {
 
 		Player player_;
 		Apple apple_;
-		Wall wall_;
 	};
 
 	void DrawGameField(GameField& gameField, sf::RenderWindow& window);

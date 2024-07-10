@@ -15,28 +15,28 @@ namespace SnakeGame {
 
 	class Player {
 	public:
-		Player(Resources& resources) : resources_(resources) {}
-		void init(float speed);
+		Player();
+		void init(int speed = 1, int size = 4, int position = 620);
 
 		void moveRight();
 		void moveLeft();
 		void moveUp();
 		void moveDown();
+		
+		void sizeIncrease();
+		void setPositionOnField(int newPosition);
 
-		void setPositionOnField(int positionFromField);
-
-		int getPositionOnField() const;
-		float getSize() const;
-		float getSpeed() const;
+		int getPositionOnField(int index) const;
+		int getSize() const;
+		int getSpeed() const;
 		PlayerDirection getDirection() const;
 
 	private:
-		int positionOnField_ = 0;
 		int size_ = 0;
-		float speed_ = 0.f;
+		int speed_ = 0;
+		int positionBuffer_ = 0;
+		std::vector<int> positionOnField_;
 
 		PlayerDirection direction_ = PlayerDirection::Right;
-
-		Resources& resources_;
 	};
 }

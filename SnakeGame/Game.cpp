@@ -52,7 +52,7 @@ namespace SnakeGame {
 		gameState_.restartGameState();
 		
 		// Initialization of game field, and reset all game objects
-		gameField_.init();
+		gameField_.reset();
 
 		//// Reset apples counter
 		gameState_.resetApplesCount();
