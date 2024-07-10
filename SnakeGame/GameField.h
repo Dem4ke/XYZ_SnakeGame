@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Engine.h"
+#include "GameStates.h"
 #include "Resources.h"
 #include "Player.h"
 #include "Apple.h"
@@ -31,24 +32,29 @@ namespace SnakeGame {
 
 	class GameField {
 	public:
-		GameField(Resources& resources, Player& player, Apple& apple);
+		GameField(Resources& resources, GameState& gameState);
 
 		void init();
-		void setPerimeterCellSprite();
+		void update(const float& deltaTime);
 
 		int getFieldSize() const;
 		sf::Sprite getSprite(int index) const;
 
 	private:
+		void setPerimeterCellSprite();
+		void setPlayerCellSprite();
+
 		int cols = 40;
 		int rows = 30;
 
 		std::vector<CellOfField> field_;
 
 		Resources& resources_;
-		Player& player_;
-		Apple& apple_;
-		//Wall& wall;
+		GameState& gameState_;
+
+		Player player_;
+		Apple apple_;
+		Wall wall_;
 	};
 
 	void DrawGameField(GameField& gameField, sf::RenderWindow& window);

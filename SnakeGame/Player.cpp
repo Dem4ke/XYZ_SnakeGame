@@ -4,70 +4,39 @@ namespace SnakeGame {
 
 	// PLAYER INITIALIZATION
 
-	//void Player::init(float playerSize, float playerSpeed) {
-	//	// Initialization of player's characteristics
-	//	direction_ = PlayerDirection::Right;
-	//	position_ = { resources_.getWindowWidth() / 2.f, resources_.getWindowHeight() / 2.f };
-	//	size_ = playerSize;
-	//	speed_ = playerSpeed;
-	//	sprite_.setRotation(0.f);
+	void Player::init(float speed) {
+		// Initialization of player's characteristics
+		direction_ = PlayerDirection::Right;
+		speed_ = speed;
+	}
 
-	//	// Init player sprite
-	//	sprite_.setTexture(resources_.playerTexture);
-	//	SetSpriteSize(sprite_, size_, size_);
-	//	SetSpriteRelativeOrigin(sprite_, 0.5f, 0.5f);
+	void Player::moveRight() {
+		direction_ = PlayerDirection::Right;
+	}
 
-	//}
+	void Player::moveLeft() {
+		direction_ = PlayerDirection::Left;
+	}
 
-	//void Player::moveRight() {
-	//	direction_ = PlayerDirection::Right;
-	//}
+	void Player::moveUp() {
+		direction_ = PlayerDirection::Up;
+	}
 
-	//void Player::moveLeft() {
-	//	direction_ = PlayerDirection::Left;
-	//}
+	void Player::moveDown() {
+		direction_ = PlayerDirection::Down;
+	}
 
-	//void Player::moveUp() {
-	//	direction_ = PlayerDirection::Up;
-	//}
+	void Player::setPositionOnField(int positionFromField) {
+		positionOnField_ = positionFromField;
+	}
 
-	//void Player::moveDown() {
-	//	direction_ = PlayerDirection::Down;
-	//}
+	int Player::getPositionOnField() const { return positionOnField_; }
 
-	//void Player::speedUp() {
-	//	speed_ += acceleration_;
-	//}
+	float Player::getSize() const { return size_; }
 
-	//// Rotate sprite of player 
-	//void Player::rotateSprite(float rotateDegree) {
-	//	sprite_.setRotation(rotateDegree);
-	//}
+	float Player::getSpeed() const { return speed_; }
 
-	//// Set sprite in normal view
-	//void Player::setNormalPlayerSprite() {
-	//	SetSpriteSize(sprite_, size_, size_);
-	//}
-
-	//// Set sprite in mirrored view
-	//void Player::setMirrorPlayerSprite() {
-	//	SetSpriteSize(sprite_, -size_, size_);
-	//}
-
-	//// Set position to sprite
-	//void Player::setSpritePosition(float x, float y) {
-	//	sprite_.setPosition(x, y);
-	//}
-
-	//float Player::getSize() const { return size_; }
-
-	//float Player::getSpeed() const { return speed_; }
-
-	//sf::RectangleShape Player::getBackground() const { return background_; }
-
-	//sf::Sprite Player::getSprite() const { return sprite_; }
-
-	//PlayerDirection Player::getDirection() const { return direction_; }
+	PlayerDirection Player::getDirection() const { return direction_; }
 
 	//// FUNCTIONS
 

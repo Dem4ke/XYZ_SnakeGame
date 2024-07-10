@@ -16,38 +16,27 @@ namespace SnakeGame {
 	class Player {
 	public:
 		Player(Resources& resources) : resources_(resources) {}
-		void init(float playerSize, float playerSpeed);
+		void init(float speed);
+
 		void moveRight();
 		void moveLeft();
 		void moveUp();
 		void moveDown();
-		void speedUp();
 
-		void rotateSprite(float rotateDegree);
-		void setNormalPlayerSprite();
-		void setMirrorPlayerSprite();
-		void setSpritePosition(float x, float y);
+		void setPositionOnField(int positionFromField);
 
+		int getPositionOnField() const;
 		float getSize() const;
 		float getSpeed() const;
-		sf::RectangleShape getBackground() const;
-		sf::Sprite getSprite() const;
 		PlayerDirection getDirection() const;
 
-		Position2D position_;
-
 	private:
-		float size_ = 0.f;
+		int positionOnField_ = 0;
+		int size_ = 0;
 		float speed_ = 0.f;
-		float acceleration_ = 20.f;
 
 		PlayerDirection direction_ = PlayerDirection::Right;
-		sf::Sprite sprite_;
 
 		Resources& resources_;
 	};
-
-	void PlayerMove(Player& player, const float& deltaTime);
-	void OutOfWindow(Player& player, Resources& resources, GameState& settings);
-	void DrawPlayer(Player& player, sf::RenderWindow& window);
 }

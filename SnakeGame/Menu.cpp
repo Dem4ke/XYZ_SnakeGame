@@ -13,11 +13,9 @@ namespace SnakeGame {
 		// Initialization of background of menu
 		// id: 0 - empty, 1 - main background
 		switch (menuId) {
-		case(0):
-			backgroundSprite_.setTexture(resources_.mainMenuBackground);
-			backgroundSprite_.setColor(sf::Color(255, 255, 255, 128));
-			break; // исправить на пустой бэк
-		case(1):
+		case 0:
+			break;
+		case 1:
 			backgroundSprite_.setTexture(resources_.mainMenuBackground);
 			break;
 		default:

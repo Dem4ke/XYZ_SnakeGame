@@ -36,10 +36,6 @@ namespace SnakeGame {
 		Menu gameOverMenu_;
 		//LeaderBoard leaderBoard_;
 
-		Player player_;
-		Apple apple_;
-		//Rock rock_;
-
 		//UI UI_;
 
 		GameState gameState_;

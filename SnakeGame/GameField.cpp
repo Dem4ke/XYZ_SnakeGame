@@ -28,11 +28,13 @@ namespace SnakeGame {
 
 	// GAME FIELD
 
-	GameField::GameField(Resources& resources, Player& player, Apple& apple) : 
-		resources_(resources), player_(player), apple_(apple) {
+	GameField::GameField(Resources& resources, GameState& gameState) :
+		resources_(resources), player_(resources),
+		apple_(resources), wall_(resources),
+		gameState_(gameState) {
 
 		init();
-		setPerimeterCellSprite(); // set all walls for perimetr of field		
+		setPerimeterCellSprite(); // set all walls for perimeter of field	
 	}
 
 	// Initialization of game field
@@ -69,8 +71,80 @@ namespace SnakeGame {
 				countOfCols = 0;
 				++countOfRows;
 			}
+
+			// Initialiazation of the player
+			switch (gameState_.getCurrentDiffLvl()) {
+			case DifficultyLevel::Easy: {
+				player_.init(1.f);
+				break;
+			}
+			case DifficultyLevel::HarderThanEasy: {
+				player_.init(2.f);
+				break;
+			}
+			case DifficultyLevel::Medium: {
+				player_.init(3.f);
+				break;
+			}
+			case DifficultyLevel::LessThanHard: {
+				player_.init(4.f);
+				break;
+			}
+			case DifficultyLevel::Hard: {
+				player_.init(5.f);
+				break;
+			}
+			}
 		}
 	}
+
+	void GameField::update(const float& deltaTime) {
+		// Change snake's head direction
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
+			player_.moveRight();
+		}
+		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
+			player_.moveUp();
+		}
+		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
+			player_.moveLeft();
+		}
+		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
+			player_.moveDown();
+		}
+
+		// Change position of snake's head sprite 
+		switch (player_.getDirection()) {
+		case PlayerDirection::Up: {
+			field_[].setObject(resources_.snakeHeadTexture);
+			field_[620].rotateSprite(270.f);
+			break;
+		}
+		case PlayerDirection::Down: {
+			field_[620].setObject(resources_.snakeHeadTexture);
+			field_[620].rotateSprite(90.f);
+			break;
+		}
+		case PlayerDirection::Right: {
+			field_[620].setObject(resources_.snakeHeadTexture);
+			field_[620].rotateSprite(0.f);
+			break;
+		}
+		case PlayerDirection::Left: {
+			field_[620].setObject(resources_.snakeHeadTexture);
+			field_[620].rotateSprite(180.f);
+			break;
+		}
+		}
+	}
+
+	int GameField::getFieldSize() const { return cols * rows; }
+
+	sf::Sprite GameField::getSprite(int index) const {
+		return field_[index].getObjectSprite();
+	}
+
+	// PRIVATE TOOLS
 
 	// Set sprites on perimeter
 	void GameField::setPerimeterCellSprite() {
@@ -84,7 +158,7 @@ namespace SnakeGame {
 				countOfCols = 0;
 				++countOfRows;
 			}
-			
+
 			if (countOfCols == 0) {
 				field_[i].setObject(resources_.wallTexture);
 				field_[i].rotateSprite(90.f);
@@ -103,10 +177,8 @@ namespace SnakeGame {
 		}
 	}
 
-	int GameField::getFieldSize() const { return cols * rows; }
+	void GameField::setPlayerCellSprite() {
 
-	sf::Sprite GameField::getSprite(int index) const {
-		return field_[index].getObjectSprite();
 	}
 
 	// FUNCTIONS

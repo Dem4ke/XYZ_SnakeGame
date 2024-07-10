@@ -38,7 +38,6 @@ namespace SnakeGame {
 		void popGameState();
 		void restartGameState();
 
-		int getNumOfApples() const;
 		GameStateType getCurrentGameState() const;
 
 		// Difficulty 
@@ -49,7 +48,6 @@ namespace SnakeGame {
 		DifficultyLevel diffLvl_ = DifficultyLevel::Easy;
 
 		int eatenApples_ = 0;
-		int numOfApples_ = 20;
 
 		GameStateType gameStateType = GameStateType::None;
 		std::vector<GameStateType> gameStatesStack;

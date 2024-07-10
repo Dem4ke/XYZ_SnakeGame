@@ -32,8 +32,6 @@ namespace SnakeGame {
 		pushGameState(GameStateType::MainMenu);
 	}
 
-	int GameState::getNumOfApples() const { return numOfApples_; }
-
 	GameStateType GameState::getCurrentGameState() const { return gameStateType; }
 
 	DifficultyLevel GameState::getCurrentDiffLvl() const { return diffLvl_; }

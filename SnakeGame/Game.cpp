@@ -7,9 +7,8 @@ namespace SnakeGame {
 		mainMenu_(resources), difficultyLevelMenu_(resources), 
 		optionsMenu_(resources), exitMenu_(resources), 
 		pauseMenu_(resources), gameOverMenu_(resources), 
-		player_(resources), apple_(resources),/*
-		rock_(resources), leaderBoard_(resources),
-		UI_(resources),*/ gameField_(resources, player_, apple_) {}
+	 /* leaderBoard_(resources),
+		UI_(resources),*/ gameField_(resources, gameState_) {}
 
 	void Game::initGame() {
 		std::vector<std::string> mainButtons = { "Play game", "Difficulity level", "Leader board", "Options", "Exit" };
@@ -52,43 +51,45 @@ namespace SnakeGame {
 		// Reset game state 
 		gameState_.restartGameState();
 		
-		// Player initialization (size of player, speed)
-		//player_.init(30.f, 100.f);
-
-		//// Apple initialization (Apple class object, array of objects, size of apple, number of apples on the field)
-		//ApplesFieldInit(apple_, fieldOfApples_, 20.f, gameState_.getNumOfApples());
+		// Initialization of game field, and reset all game objects
+		gameField_.init();
 
 		//// Reset apples counter
-		//gameState_.resetApplesCount();
+		gameState_.resetApplesCount();
 		//UI_.appleCountUpdate(gameState_);
-
-		// Rock initialization (Rock class object, array of objects, size of rock, number of rocks on the field)
-		//RocksFieldInit(rock_, fieldOfRocks_, 30.f, gameState_.numOfRocks);
 	}
 
 	// Update menu states, it works only with Event
 	void Game::updateMenu(sf::Event& event) {
-		
-		if (gameState_.getCurrentGameState() == GameStateType::MainMenu) {
+		switch (gameState_.getCurrentGameState()) {
+		case GameStateType::MainMenu: {
 			MainMenuMovement(mainMenu_, gameState_, event);
+			break;
 		}
-		else if (gameState_.getCurrentGameState() == GameStateType::DifficulityLevelChoose) {
+		case GameStateType::DifficulityLevelChoose: {
 			DiffLvlMenuMovement(difficultyLevelMenu_, gameState_, event);
+			break;
 		}
-		else if (gameState_.getCurrentGameState() == GameStateType::Options) {
+		case GameStateType::Options: {
 			OptionsMenuMovement(optionsMenu_, gameState_, event);
+			break;
 		}
-		else if (gameState_.getCurrentGameState() == GameStateType::ExitDialog) {
+		case GameStateType::ExitDialog: {
 			ExitMenuMovement(exitMenu_, gameState_, event, window_);
+			break;
 		}
-		else if (gameState_.getCurrentGameState() == GameStateType::Pause) {
+		case GameStateType::Pause: {
 			PauseMenuMovement(pauseMenu_, gameState_, event);
+			break;
 		}
-		else if (gameState_.getCurrentGameState() == GameStateType::LeaderBoard) {
-	//		LeaderBoardMovement(leaderBoard_, gameState_, event);
+		case GameStateType::LeaderBoard: {
+			//		LeaderBoardMovement(leaderBoard_, gameState_, event);
+			break;
 		}
-		else if (gameState_.getCurrentGameState() == GameStateType::GameOver) {
+		case GameStateType::GameOver: {
 			GameOverMenuMovement(gameOverMenu_, gameState_, event);
+			break;
+		}
 		}
 	}
 
@@ -96,39 +97,11 @@ namespace SnakeGame {
 	void Game::updateGame(const float& deltaTime) {
 		if (gameState_.getCurrentGameState() == GameStateType::Game) {
 
-			//// Player movement
-			//PlayerMove(player_, deltaTime);
-
-			//// Window collision
-			//OutOfWindow(player_, resources_, gameState_);
-
-			//// Collision with rocks
-			//RockCollision(fieldOfRocks_, player_, resources_, gameState_);
+			// Update main game process
+			gameField_.update(deltaTime);
 
 			// Pause menu maker
 			ExitInPauseMenu(gameState_);
-
-			// Differents versions of collision with apples
-	/*		if ((gameState_.gameSettings & GameOptions::isApplesInfinite) &&
-				!(gameState_.gameSettings & GameOptions::isPlayerAccelerated)) {
-
-				InfApplesWithNoAcc(fieldOfApples_, player_, resources_, gameState_, UI_);
-			}
-			else if ((gameState_.gameSettings & GameOptions::isApplesInfinite) && 
-					(gameState_.gameSettings & GameOptions::isPlayerAccelerated)) {
-
-				InfApplesWithAcc(fieldOfApples_, player_, resources_, gameState_, UI_);
-			}
-			else if (!(gameState_.gameSettings & GameOptions::isApplesInfinite) && 
-					!(gameState_.gameSettings & GameOptions::isPlayerAccelerated)) {
-
-				LimApplesWithNoAcc(fieldOfApples_, player_, resources_, gameState_, UI_);
-			}
-			else if (!(gameState_.gameSettings & GameOptions::isApplesInfinite) && 
-					(gameState_.gameSettings & GameOptions::isPlayerAccelerated)) {
-
-				LimApplesWithAcc(fieldOfApples_, player_, resources_, gameState_, UI_);
-			}*/
 		}
 	}
 
