@@ -13,6 +13,7 @@ namespace SnakeGame {
 		void setPositionOnField(int position);
 
 		int getPositionOnField() const;
+		int getCost() const;
 		bool isAppleExists() const;
 
 	private:

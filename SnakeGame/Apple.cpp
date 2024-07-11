@@ -21,6 +21,10 @@ namespace SnakeGame {
 		return positionOnField_;
 	}
 
+	int Apple::getCost() const {
+		return cost_;
+	}
+
 	bool Apple::isAppleExists() const {
 		return isExists_;
 	}

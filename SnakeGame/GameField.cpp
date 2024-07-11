@@ -303,8 +303,9 @@ namespace SnakeGame {
 		}
 		else if (field_[player_.getPositionOnField(0)].getObjectType() == objectType::normalApple) {
 			AppleEatenSound(resources_);
-			apple_.setStatus(false);
-			player_.sizeIncrease();
+			gameState_.scoreIncrease(apple_.getCost()); // update player's score
+			apple_.setStatus(false);					// delete apple from field
+			player_.sizeIncrease();						// update player size
 		}
 	}
 

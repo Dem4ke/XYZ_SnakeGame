@@ -7,8 +7,8 @@ namespace SnakeGame {
 		mainMenu_(resources), difficultyLevelMenu_(resources), 
 		optionsMenu_(resources), exitMenu_(resources), 
 		pauseMenu_(resources), gameOverMenu_(resources), 
-	 /* leaderBoard_(resources),
-		UI_(resources),*/ gameField_(resources, gameState_) {}
+	 /* leaderBoard_(resources),*/
+		UI_(resources), gameField_(resources, gameState_) {}
 
 	void Game::initGame() {
 		std::vector<std::string> mainButtons = { "Play game", "Difficulity level", "Leader board", "Options", "Exit" };
@@ -31,8 +31,8 @@ namespace SnakeGame {
 		// Leader board initialization (Name of menu, size of names, Settings class object)
 		//leaderBoard_.init("Leader Board", 40.f, gameState_);
 
-		//// User interface initialization (size of a text elements)
-		//UI_.init(20.f);
+		// User interface initialization (size of a text elements)
+		UI_.init(20.f);
 		
 		// Initialization of a background music and start to play it
 		SetMusicVolume(resources_, 5.f);
@@ -54,9 +54,9 @@ namespace SnakeGame {
 		// Initialization of game field, and reset all game objects
 		gameField_.reset();
 
-		//// Reset apples counter
-		gameState_.resetApplesCount();
-		//UI_.appleCountUpdate(gameState_);
+		// Reset score
+		gameState_.resetScore();
+		UI_.scoreUpdate(gameState_);
 	}
 
 	// Update menu states, it works only with Event
@@ -102,6 +102,9 @@ namespace SnakeGame {
 
 			// Pause menu maker
 			ExitInPauseMenu(gameState_);
+
+			// Update player's score
+			UI_.scoreUpdate(gameState_);
 		}
 	}
 
@@ -138,9 +141,9 @@ namespace SnakeGame {
 	//		DrawLeaderBoard(leaderBoard_, window_);
 		}
 		else if (gameState_.getCurrentGameState() == GameStateType::Game) {
-		//	DrawUI(UI_, window_);
 			window_.draw(gameBackSprite_);
 			DrawGameField(gameField_, window_);
+			DrawUI(UI_, window_);
 		}
 	}
 

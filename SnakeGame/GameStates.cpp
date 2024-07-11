@@ -5,13 +5,13 @@ namespace SnakeGame {
 	GameState::GameState() {}
 
 	// Increase apples counter when apple has been eaten
-	void GameState::appleIncrease() {
-		++eatenApples_;
+	void GameState::scoreIncrease(int cost) {
+		score_ += cost;
 	}
 
 	// Reset apples counter when game has been restarted
-	void GameState::resetApplesCount() {
-		eatenApples_ = 0;
+	void GameState::resetScore() {
+		score_ = 0;
 	}
 
 	// Add a new game state in "game states stack"
@@ -31,6 +31,8 @@ namespace SnakeGame {
 		gameStatesStack.clear();
 		pushGameState(GameStateType::MainMenu);
 	}
+
+	int GameState::getScore() const { return score_; }
 
 	GameStateType GameState::getCurrentGameState() const { return gameStateType; }
 

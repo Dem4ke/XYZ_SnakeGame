@@ -36,7 +36,7 @@ namespace SnakeGame {
 		Menu gameOverMenu_;
 		//LeaderBoard leaderBoard_;
 
-		//UI UI_;
+		UI UI_;
 
 		GameState gameState_;
 

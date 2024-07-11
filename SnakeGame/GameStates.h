@@ -31,13 +31,14 @@ namespace SnakeGame {
 	public: 
 		GameState();
 
-		void appleIncrease();
-		void resetApplesCount();
+		void scoreIncrease(int cost);
+		void resetScore();
 		
 		void pushGameState(GameStateType newType);
 		void popGameState();
 		void restartGameState();
 
+		int getScore() const;
 		GameStateType getCurrentGameState() const;
 
 		// Difficulty 
@@ -47,7 +48,7 @@ namespace SnakeGame {
 	private:
 		DifficultyLevel diffLvl_ = DifficultyLevel::Easy;
 
-		int eatenApples_ = 0;
+		int score_ = 0;
 
 		GameStateType gameStateType = GameStateType::None;
 		std::vector<GameStateType> gameStatesStack;

@@ -9,7 +9,7 @@ namespace SnakeGame {
 	public:
 		UI(Resources& resources) : resources_(resources) {}
 		void init(float buttonSize);
-		void appleCountUpdate(GameState& settings);
+		void scoreUpdate(GameState& gameStates);
 
 		sf::Text getHelp() const;
 		sf::Text getScore() const;
