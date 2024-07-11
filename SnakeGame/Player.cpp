@@ -11,7 +11,10 @@ namespace SnakeGame {
 		direction_ = PlayerDirection::Right;
 		speed_ = speed;
 		size_ = size;
-		positionOnField_.push_back(position); // Set head position
+
+		// Set head position
+		positionOnField_.clear();
+		positionOnField_.push_back(position); 
 
 		// Set body position
 		for (int i = 1; i < size_; ++i) {

@@ -6,6 +6,7 @@ namespace SnakeGame {
 
 	void Apple::init(int cost) {
 		cost_ = cost;
+		isExists_ = false;
 	}
 
 	void Apple::setStatus(bool isExists) {

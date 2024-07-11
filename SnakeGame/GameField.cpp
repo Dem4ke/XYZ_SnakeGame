@@ -113,35 +113,45 @@ namespace SnakeGame {
 	}
 
 	void GameField::reset() {
+		// Initialization of filed and interactive objects
 		init();
+
 		// Set walls 
 		setPerimeterCellSprite();
 	}
 
 	void GameField::update(const float& deltaTime) {
+		// Delay to move in another cell
+		timer_ -= player_.getSpeed();
 
 		// Change snake's head direction
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
-			player_.moveRight();
+			if (player_.getDirection() != PlayerDirection::Left) {
+				player_.moveRight();
+			}
 		}
 		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
-			player_.moveUp();
+			if (player_.getDirection() != PlayerDirection::Down) {
+				player_.moveUp();
+			}
 		}
 		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
-			player_.moveLeft();
+			if (player_.getDirection() != PlayerDirection::Right) {
+				player_.moveLeft();
+			}
 		}
 		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
-			player_.moveDown();
+			if (player_.getDirection() != PlayerDirection::Up) {
+				player_.moveDown();
+			}
 		}
 
 		// Change position of snake's head sprite 
 		switch (player_.getDirection()) {
 		case PlayerDirection::Up: {
-			// Delay to move in another cell
-			timer_ -= player_.getSpeed();
 
-			if (timer_ < 0) {
-				// Check info about cell under player's head
+			if (timer_ <= 0) {
+				// Check info about cell under player's head (is that cell a body)
 				cellInfoCheck();
 
 				// Clear all cells 
@@ -151,6 +161,9 @@ namespace SnakeGame {
 
 				// Move player on next position
 				player_.setPositionOnField(player_.getPositionOnField(0) - cols_);
+				
+				// Check info about cell under player's head
+				cellInfoCheck();
 
 				// Set head's sprite on new position
 				field_[player_.getPositionOnField(0)].setObject(resources_.snakeHeadTexture, objectType::snakeHead);
@@ -167,11 +180,9 @@ namespace SnakeGame {
 			break;
 		}
 		case PlayerDirection::Down: {
-			// Delay to move in another cell
-			timer_ -= player_.getSpeed();
 
-			if (timer_ < 0) {
-				// Check info about cell under player's head
+			if (timer_ <= 0) {
+				// Check info about cell under player's head (is that cell a body)
 				cellInfoCheck();
 
 				// Clear all cells 
@@ -181,6 +192,9 @@ namespace SnakeGame {
 
 				// Move player on next position
 				player_.setPositionOnField(player_.getPositionOnField(0) + cols_);
+				
+				// Check info about cell under player's head
+				cellInfoCheck();
 
 				// Set head's sprite on new position
 				field_[player_.getPositionOnField(0)].setObject(resources_.snakeHeadTexture, objectType::snakeHead);
@@ -197,11 +211,9 @@ namespace SnakeGame {
 			break;
 		}
 		case PlayerDirection::Right: {
-			// Delay to move in another cell
-			timer_ -= player_.getSpeed();
 
-			if (timer_ < 0) {
-				// Check info about cell under player's head
+			if (timer_ <= 0) {
+				// Check info about cell under player's head (is that cell a body)
 				cellInfoCheck();
 
 				// Clear all cells 
@@ -211,6 +223,9 @@ namespace SnakeGame {
 
 				// Move player on next position
 				player_.setPositionOnField(player_.getPositionOnField(0) + 1);
+				
+				// Check info about cell under player's head
+				cellInfoCheck();
 
 				// Set head's sprite on new position
 				field_[player_.getPositionOnField(0)].setObject(resources_.snakeHeadTexture, objectType::snakeHead);
@@ -227,20 +242,21 @@ namespace SnakeGame {
 			break;
 		}
 		case PlayerDirection::Left: {
-			// Delay to move in another cell
-			timer_ -= player_.getSpeed();
 
-			if (timer_ < 0) {
-				// Check info about cell under player's head
+			if (timer_ <= 0) {
+				// Check info about cell under player's head (is that cell a body)
 				cellInfoCheck();
 
 				// Clear all cells 
 				for (int i = 0, end = player_.getSize(); i < end; ++i) {
 					field_[player_.getPositionOnField(i)].clear();
 				}
-				
+
 				// Move player on next position
 				player_.setPositionOnField(player_.getPositionOnField(0) - 1);
+
+				// Check info about cell under player's head
+				cellInfoCheck();
 
 				// Set head's sprite on new position
 				field_[player_.getPositionOnField(0)].setObject(resources_.snakeHeadTexture, objectType::snakeHead);
@@ -274,20 +290,19 @@ namespace SnakeGame {
 	
 	// Check cell info which player's head reach
 	void GameField::cellInfoCheck() {
-
-		// ÍÅ ÐÀÁÎÒÀÅÒ
-
 		if (field_[player_.getPositionOnField(0)].getObjectType() == objectType::wall) { 
+			GameOverSound(resources_);
 			gameState_.pushGameState(GameStateType::GameOver);
 		}
 		else if (field_[player_.getPositionOnField(0)].getObjectType() == objectType::poisonedApple) {
-			gameState_.pushGameState(GameStateType::GameOver);
+
 		}
 		else if (field_[player_.getPositionOnField(0)].getObjectType() == objectType::snakeBody) {
+			GameOverSound(resources_);
 			gameState_.pushGameState(GameStateType::GameOver);
 		}
 		else if (field_[player_.getPositionOnField(0)].getObjectType() == objectType::normalApple) {
-			gameState_.pushGameState(GameStateType::GameOver);
+			AppleEatenSound(resources_);
 			apple_.setStatus(false);
 			player_.sizeIncrease();
 		}
@@ -334,6 +349,7 @@ namespace SnakeGame {
 
 		// Set apple's sprite in avalible position
 		field_[apple_.getPositionOnField()].setObject(resources_.appleTexture, objectType::normalApple);
+		field_[apple_.getPositionOnField()].rotateSprite(0.f);
 
 		// Change apple's signature to exists
 		apple_.setStatus(true);

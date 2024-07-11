@@ -252,22 +252,27 @@ namespace SnakeGame {
 			else if (event.key.code == diffLvlChooseMenu.getEnterKey()) {
 				if (diffLvlChooseMenu.getSelectedButton() == 0) {
 					gameState.setNewDifficulty(DifficultyLevel::Easy);
+					gameState.pushGameState(GameStateType::GameReset);
 					diffLvlChooseMenu.chooseButtonSound();
 				}
 				else if (diffLvlChooseMenu.getSelectedButton() == 1) {
 					gameState.setNewDifficulty(DifficultyLevel::HarderThanEasy);
+					gameState.pushGameState(GameStateType::GameReset);
 					diffLvlChooseMenu.chooseButtonSound();
 				}
 				else if (diffLvlChooseMenu.getSelectedButton() == 2) {
 					gameState.setNewDifficulty(DifficultyLevel::Medium);
+					gameState.pushGameState(GameStateType::GameReset);
 					diffLvlChooseMenu.chooseButtonSound();
 				}
 				else if (diffLvlChooseMenu.getSelectedButton() == 3) {
 					gameState.setNewDifficulty(DifficultyLevel::LessThanHard);
+					gameState.pushGameState(GameStateType::GameReset);
 					diffLvlChooseMenu.chooseButtonSound();
 				}
 				else if (diffLvlChooseMenu.getSelectedButton() == 4) {
 					gameState.setNewDifficulty(DifficultyLevel::Hard);
+					gameState.pushGameState(GameStateType::GameReset);
 					diffLvlChooseMenu.chooseButtonSound();
 				}
 			}
