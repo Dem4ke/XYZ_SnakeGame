@@ -67,8 +67,8 @@ namespace SnakeGame {
 			
 			// must count cols and rows to dont go out of window borders
 			// because of screen is matrix of cells
-			// cols counter have to be less than cols
-			// rows counter have to be less than rows
+			// cols' counter have to be less than cols
+			// rows' counter have to be less than rows
 
 			// Sprite position is in center of a cell
 			cell.setSpritePosition(countOfCols * width + 0.5f * width, 
@@ -120,29 +120,37 @@ namespace SnakeGame {
 		setPerimeterCellSprite();
 	}
 
-	void GameField::update(const float& deltaTime) {
+	void GameField::update() {
 		// Delay to move in another cell
 		timer_ -= player_.getSpeed();
 
 		// Change snake's head direction
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
 			if (player_.getDirection() != PlayerDirection::Left) {
-				player_.moveRight();
+				if (timer_ <= 0) {
+					player_.moveRight();
+				}
 			}
 		}
 		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
 			if (player_.getDirection() != PlayerDirection::Down) {
-				player_.moveUp();
+				if (timer_ <= 0) {
+					player_.moveUp();
+				}
 			}
 		}
 		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
 			if (player_.getDirection() != PlayerDirection::Right) {
-				player_.moveLeft();
+				if (timer_ <= 0) {
+					player_.moveLeft();
+				}
 			}
 		}
 		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
 			if (player_.getDirection() != PlayerDirection::Up) {
-				player_.moveDown();
+				if (timer_ <= 0) {
+					player_.moveDown();
+				}
 			}
 		}
 

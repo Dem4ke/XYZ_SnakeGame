@@ -7,8 +7,8 @@ namespace SnakeGame {
 		mainMenu_(resources), difficultyLevelMenu_(resources), 
 		optionsMenu_(resources), exitMenu_(resources), 
 		pauseMenu_(resources), gameOverMenu_(resources), 
-	 /* leaderBoard_(resources),*/
-		UI_(resources), gameField_(resources, gameState_) {}
+	    leaderBoard_(resources), UI_(resources), 
+		gameField_(resources, gameState_) {}
 
 	void Game::initGame() {
 		std::vector<std::string> mainButtons = { "Play game", "Difficulity level", "Leader board", "Options", "Exit" };
@@ -29,7 +29,7 @@ namespace SnakeGame {
 		gameOverMenu_.init("Game Over\n\n", gameOverButtons, 40.f, sf::Color::White, 1);
 
 		// Leader board initialization (Name of menu, size of names, Settings class object)
-		//leaderBoard_.init("Leader Board", 40.f, gameState_);
+		leaderBoard_.init("Leader Board", 40.f, gameState_);
 
 		// User interface initialization (size of a text elements)
 		UI_.init(20.f);
@@ -94,11 +94,11 @@ namespace SnakeGame {
 	}
 
 	// Update only game process 
-	void Game::updateGame(const float& deltaTime) {
+	void Game::updateGame() {
 		if (gameState_.getCurrentGameState() == GameStateType::Game) {
 
 			// Update main game process
-			gameField_.update(deltaTime);
+			gameField_.update();
 
 			// Pause menu maker
 			ExitInPauseMenu(gameState_);
@@ -108,11 +108,11 @@ namespace SnakeGame {
 		}
 	}
 
-	void Game::gameOver(const float& deltaTime) {
-		/*if (gameState_.getCurrentGameState() == GameStateType::GameOver) {
+	void Game::gameOver() {
+		if (gameState_.getCurrentGameState() == GameStateType::GameOver) {
 			leaderBoard_.sortTable(gameState_);
-		
-		else */ if (gameState_.getCurrentGameState() == GameStateType::GameReset) {
+		}
+		else if (gameState_.getCurrentGameState() == GameStateType::GameReset) {
 			restartGame();
 		}
 	}
@@ -135,10 +135,10 @@ namespace SnakeGame {
 		}
 		else if (gameState_.getCurrentGameState() == GameStateType::GameOver) {
 			DrawMenu(gameOverMenu_, window_);
-	//		DrawLeaderBoard(leaderBoard_, window_);
+			DrawLeaderBoard(leaderBoard_, window_);
 		}
 		else if (gameState_.getCurrentGameState() == GameStateType::LeaderBoard) {
-	//		DrawLeaderBoard(leaderBoard_, window_);
+			DrawLeaderBoard(leaderBoard_, window_);
 		}
 		else if (gameState_.getCurrentGameState() == GameStateType::Game) {
 			window_.draw(gameBackSprite_);

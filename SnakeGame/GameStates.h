@@ -39,6 +39,7 @@ namespace SnakeGame {
 		void restartGameState();
 
 		int getScore() const;
+		int getPauseTime() const;
 		GameStateType getCurrentGameState() const;
 
 		// Difficulty 
@@ -47,8 +48,9 @@ namespace SnakeGame {
 
 	private:
 		DifficultyLevel diffLvl_ = DifficultyLevel::Easy;
-
+		 
 		int score_ = 0;
+		int afterPauseTime_ = 3; // seconds before game will continue
 
 		GameStateType gameStateType = GameStateType::None;
 		std::vector<GameStateType> gameStatesStack;

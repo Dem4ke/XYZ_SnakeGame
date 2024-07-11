@@ -125,42 +125,42 @@ namespace SnakeGame {
 
 	// LEADER BOARD INITIALIZATION
 
-	//void LeaderBoard::init(std::string menuName, float buttonSize, GameStates& settings) {
-	//	posX_ = resources_.getWindowWidth() / 2.f;
-	//	posY_ = resources_.getWindowHeight() / 3.f;
-	//	buttonSize_ = buttonSize;
+	void LeaderBoard::init(std::string menuName, float buttonSize, GameState& gameState) {
+		posX_ = resources_.getWindowWidth() / 2.f;
+		posY_ = resources_.getWindowHeight() / 3.f;
+		buttonSize_ = buttonSize;
 
-	//	// Initialization of name of a game
-	//	menuName_.setFont(resources_.font);
-	//	menuName_.setCharacterSize(buttonSize_ * 1.5f);
-	//	menuName_.setFillColor(sf::Color::Red);
-	//	menuName_.setString(menuName);
-	//	menuName_.setOrigin(sf::Vector2f(menuName_.getGlobalBounds().width / 2.f, menuName_.getGlobalBounds().height / 2.f));
-	//	menuName_.setPosition(posX_, posY_ - buttonSize_);
+		// Initialization of name of a game
+		menuName_.setFont(resources_.font);
+		menuName_.setCharacterSize(buttonSize_ * 1.5f);
+		menuName_.setFillColor(sf::Color::Red);
+		menuName_.setString(menuName);
+		menuName_.setOrigin(sf::Vector2f(menuName_.getGlobalBounds().width / 2.f, menuName_.getGlobalBounds().height / 2.f));
+		menuName_.setPosition(posX_, posY_ - buttonSize_);
 
-	//	// Initialization of players names
-	//	playerName_.setFont(resources_.font);
-	//	playerName_.setCharacterSize(buttonSize_);
-	//	playerName_.setFillColor(sf::Color::White);
+		// Initialization of players names
+		playerName_.setFont(resources_.font);
+		playerName_.setCharacterSize(buttonSize_);
+		playerName_.setFillColor(sf::Color::White);
 
-	//	// Initialization of players score
-	//	playerScore_.setFont(resources_.font);
-	//	playerScore_.setCharacterSize(buttonSize_);
-	//	playerScore_.setFillColor(sf::Color::White);
+		// Initialization of players score
+		playerScore_.setFont(resources_.font);
+		playerScore_.setCharacterSize(buttonSize_);
+		playerScore_.setFillColor(sf::Color::White);
 
-	//	table_["Hydra"] = settings.numOfApples;
-	//	table_["Dominatus"] = settings.numOfApples - (settings.numOfApples / 4);
-	//	table_["Alpha"] = settings.numOfApples / 2;
-	//	table_["Omega"] = 1;
-	//	table_["Player"] = 0;
+		table_["Hydra"] = 0;
+		table_["Dominatus"] = 0;
+		table_["Alpha"] = 0;
+		table_["Omega"] = 1;
+		table_["Player"] = 0;
 
-	//	sortTable(settings);
-	//}
+		sortTable(gameState);
+	}
 
-	/*void LeaderBoard::sortTable(GameStates& settings) {
+	void LeaderBoard::sortTable(GameState& gameState) {
 		float space = buttonSize_;
 
-		table_["Player"] = settings.eatenApples_;
+		table_["Player"] = 0;
 
 		auto cmp = [](std::pair<std::string, int> const& a, std::pair<std::string, int> const& b) {
 			return a.second > b.second;
@@ -188,15 +188,15 @@ namespace SnakeGame {
 
 			space += buttonSize_;
 		}
-	}*/
+	}
 
-	/*size_t LeaderBoard::getPositionsCount() const { return liderBoard_.size(); }
+	size_t LeaderBoard::getPositionsCount() const { return liderBoard_.size(); }
 
 	sf::Text LeaderBoard::getName(int num) const { return liderBoard_[num].first; }
 
 	sf::Text LeaderBoard::getScore(int num) const { return liderBoard_[num].second; }
 
-	sf::Text LeaderBoard::getGeneralName() const { return menuName_; }*/
+	sf::Text LeaderBoard::getGeneralName() const { return menuName_; }
 
 	// FUNCTIONS
 
@@ -347,14 +347,14 @@ namespace SnakeGame {
 	}
 
 	void LeaderBoardMovement(LeaderBoard& leaderBoard, GameState& gameState, const sf::Event& event) {
-		/*if (event.type == sf::Event::KeyPressed) {
+		if (event.type == sf::Event::KeyPressed) {
 			if (event.key.code == sf::Keyboard::Escape) {
 				gameState.popGameState();
 			} 
 			else if (event.key.code == sf::Keyboard::B) {
 				gameState.popGameState();
 			}
-		}*/
+		}
 	}
 
 	void PauseMenuMovement(Menu& pauseMenu, GameState& gameState, const sf::Event& event) {
@@ -412,10 +412,10 @@ namespace SnakeGame {
 	}
 
 	void DrawLeaderBoard(LeaderBoard& leaderBoard, sf::RenderWindow& window) {
-		/*window.draw(leaderBoard.getGeneralName());
+		window.draw(leaderBoard.getGeneralName());
 		for (int i = 0, it = leaderBoard.getPositionsCount(); i < it; ++i) {
 			window.draw(leaderBoard.getName(i));
 			window.draw(leaderBoard.getScore(i));
-		}*/
+		}
 	}
 }

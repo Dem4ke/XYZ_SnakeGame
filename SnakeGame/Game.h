@@ -15,8 +15,8 @@ namespace SnakeGame {
 		void initGame();
 		void restartGame();
 		void updateMenu(sf::Event& event);
-		void updateGame(const float& deltaTime);
-		void gameOver(const float& deltaTime);
+		void updateGame();
+		void gameOver();
 		void drawGame();
 
 	private:
@@ -34,7 +34,7 @@ namespace SnakeGame {
 		Menu exitMenu_;
 		Menu pauseMenu_;
 		Menu gameOverMenu_;
-		//LeaderBoard leaderBoard_;
+		LeaderBoard leaderBoard_;
 
 		UI UI_;
 

@@ -6,26 +6,14 @@ int main() {
 
 	// Game initialization
 	SnakeGame::Resources resources{ 800.f, 600.f };
-	sf::RenderWindow window(sf::VideoMode(resources.getWindowWidth(), resources.getWindowHeight()), "Apples Game!");
+	sf::RenderWindow window(sf::VideoMode(resources.getWindowWidth(), resources.getWindowHeight()), "Snake Game!");
 
 	SnakeGame::Game game{ resources, window };
 
 	game.initGame();
 
-	// Initialization of clocks
-	sf::Clock gameClock;
-	float lastTime = gameClock.getElapsedTime().asSeconds();
-
 	// Main loop
 	while (window.isOpen()) {
-
-		// Reduse framerate to not spam CPU and GPU
-		sf::sleep(sf::milliseconds(6));
-
-		// Calculate time delta
-		float currentTime = gameClock.getElapsedTime().asSeconds();
-		float deltaTime = currentTime - lastTime;
-		lastTime = currentTime;
 
 		// OS state checkout
 		sf::Event event;
@@ -40,8 +28,9 @@ int main() {
 			game.updateMenu(event);
 		}
 
-		game.updateGame(deltaTime);
-		game.gameOver(deltaTime);
+		// Update main gameplay 
+		game.updateGame();
+		game.gameOver();
 
 		// Draw game
 		window.clear();

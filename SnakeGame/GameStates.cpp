@@ -34,6 +34,8 @@ namespace SnakeGame {
 
 	int GameState::getScore() const { return score_; }
 
+	int GameState::getPauseTime() const { return afterPauseTime_; }
+
 	GameStateType GameState::getCurrentGameState() const { return gameStateType; }
 
 	DifficultyLevel GameState::getCurrentDiffLvl() const { return diffLvl_; }

@@ -47,7 +47,7 @@ namespace SnakeGame {
 
 		void init();
 		void reset();
-		void update(const float& deltaTime);
+		void update();
 
 		int getFieldSize() const;
 		sf::Sprite getSprite(int index) const;
@@ -58,7 +58,7 @@ namespace SnakeGame {
 		void setAppleCellSprite();
 		int getRandomAvaliblePosition();
 
-		int defTimer_ = 20;
+		int defTimer_ = 200;
 		int timer_ = 0;
 		int cols_ = 40;
 		int rows_ = 30;

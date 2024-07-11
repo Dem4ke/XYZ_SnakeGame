@@ -17,16 +17,10 @@ namespace SnakeGame {
 		positionOnField_ = position;
 	}
 
-	int Apple::getPositionOnField() const {
-		return positionOnField_;
-	}
+	int Apple::getPositionOnField() const {	return positionOnField_; }
 
-	int Apple::getCost() const {
-		return cost_;
-	}
+	int Apple::getCost() const { return cost_; }
 
-	bool Apple::isAppleExists() const {
-		return isExists_;
-	}
+	bool Apple::isAppleExists() const {	return isExists_; }
 
 }
