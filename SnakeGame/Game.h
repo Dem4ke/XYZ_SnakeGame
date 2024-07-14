@@ -5,6 +5,7 @@
 #include "Player.h"
 #include "Apple.h"
 #include "Wall.h"
+#include "UI.h"
 
 namespace SnakeGame {
 
@@ -15,7 +16,7 @@ namespace SnakeGame {
 		void initGame();
 		void restartGame();
 		void updateMenu(sf::Event& event);
-		void updateGame();
+		void updateGame(const float& deltaTime);
 		void gameOver();
 		void drawGame();
 
@@ -34,7 +35,11 @@ namespace SnakeGame {
 		Menu exitMenu_;
 		Menu pauseMenu_;
 		Menu gameOverMenu_;
+
 		LeaderBoard leaderBoard_;
+
+		PopUp gameOverPopUp_;
+		PopUp chooseName_;
 
 		UI UI_;
 

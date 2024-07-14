@@ -89,22 +89,22 @@ namespace SnakeGame {
 				break;
 			}
 			case DifficultyLevel::HarderThanEasy: {
-				player_.init(2);
+				player_.init(1.3);
 				apple_.init(4);
 				break;
 			}
 			case DifficultyLevel::Medium: {
-				player_.init(3);
+				player_.init(1.8);
 				apple_.init(6);
 				break;
 			}
 			case DifficultyLevel::LessThanHard: {
-				player_.init(4);
+				player_.init(2.1);
 				apple_.init(8);
 				break;
 			}
 			case DifficultyLevel::Hard: {
-				player_.init(5);
+				player_.init(2.5);
 				apple_.init(10);
 				break;
 			}
@@ -120,45 +120,39 @@ namespace SnakeGame {
 		setPerimeterCellSprite();
 	}
 
-	void GameField::update() {
+	void GameField::update(const float& deltaTime) {
 		// Delay to move in another cell
-		timer_ -= player_.getSpeed();
+		timer_ -= (player_.getSpeed() * deltaTime);
 
 		// Change snake's head direction
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
 			if (player_.getDirection() != PlayerDirection::Left) {
-				if (timer_ <= 0) {
-					player_.moveRight();
-				}
+				player_.moveRight();
 			}
 		}
 		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
 			if (player_.getDirection() != PlayerDirection::Down) {
-				if (timer_ <= 0) {
-					player_.moveUp();
-				}
+				player_.moveUp();
 			}
 		}
 		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
 			if (player_.getDirection() != PlayerDirection::Right) {
-				if (timer_ <= 0) {
-					player_.moveLeft();
-				}
+				player_.moveLeft();
+
 			}
 		}
 		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
 			if (player_.getDirection() != PlayerDirection::Up) {
-				if (timer_ <= 0) {
-					player_.moveDown();
-				}
+				player_.moveDown();
 			}
 		}
 
-		// Change position of snake's head sprite 
-		switch (player_.getDirection()) {
-		case PlayerDirection::Up: {
+		if (timer_ <= 0) {
 
-			if (timer_ <= 0) {
+			// Change position of snake's head sprite 
+			switch (player_.getDirection()) {
+			case PlayerDirection::Up: {
+
 				// Check info about cell under player's head (is that cell a body)
 				cellInfoCheck();
 
@@ -169,7 +163,7 @@ namespace SnakeGame {
 
 				// Move player on next position
 				player_.setPositionOnField(player_.getPositionOnField(0) - cols_);
-				
+
 				// Check info about cell under player's head
 				cellInfoCheck();
 
@@ -183,13 +177,11 @@ namespace SnakeGame {
 				}
 
 				timer_ = defTimer_;
-			}
-			
-			break;
-		}
-		case PlayerDirection::Down: {
 
-			if (timer_ <= 0) {
+				break;
+			}
+			case PlayerDirection::Down: {
+
 				// Check info about cell under player's head (is that cell a body)
 				cellInfoCheck();
 
@@ -200,7 +192,7 @@ namespace SnakeGame {
 
 				// Move player on next position
 				player_.setPositionOnField(player_.getPositionOnField(0) + cols_);
-				
+
 				// Check info about cell under player's head
 				cellInfoCheck();
 
@@ -214,13 +206,11 @@ namespace SnakeGame {
 				}
 
 				timer_ = defTimer_;
+
+				break;
 			}
+			case PlayerDirection::Right: {
 
-			break;
-		}
-		case PlayerDirection::Right: {
-
-			if (timer_ <= 0) {
 				// Check info about cell under player's head (is that cell a body)
 				cellInfoCheck();
 
@@ -231,7 +221,7 @@ namespace SnakeGame {
 
 				// Move player on next position
 				player_.setPositionOnField(player_.getPositionOnField(0) + 1);
-				
+
 				// Check info about cell under player's head
 				cellInfoCheck();
 
@@ -245,13 +235,11 @@ namespace SnakeGame {
 				}
 
 				timer_ = defTimer_;
+
+				break;
 			}
+			case PlayerDirection::Left: {
 
-			break;
-		}
-		case PlayerDirection::Left: {
-
-			if (timer_ <= 0) {
 				// Check info about cell under player's head (is that cell a body)
 				cellInfoCheck();
 
@@ -276,10 +264,10 @@ namespace SnakeGame {
 				}
 
 				timer_ = defTimer_;
-			}
 
-			break;
-		}
+				break;
+			}
+			}
 		}
 		
 		// Create apple in random position on screen
@@ -300,14 +288,14 @@ namespace SnakeGame {
 	void GameField::cellInfoCheck() {
 		if (field_[player_.getPositionOnField(0)].getObjectType() == objectType::wall) { 
 			GameOverSound(resources_);
-			gameState_.pushGameState(GameStateType::GameOver);
+			gameState_.pushGameState(GameStateType::GameOverPopUp);
 		}
 		else if (field_[player_.getPositionOnField(0)].getObjectType() == objectType::poisonedApple) {
 
 		}
 		else if (field_[player_.getPositionOnField(0)].getObjectType() == objectType::snakeBody) {
 			GameOverSound(resources_);
-			gameState_.pushGameState(GameStateType::GameOver);
+			gameState_.pushGameState(GameStateType::GameOverPopUp);
 		}
 		else if (field_[player_.getPositionOnField(0)].getObjectType() == objectType::normalApple) {
 			AppleEatenSound(resources_);

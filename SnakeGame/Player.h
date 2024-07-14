@@ -2,7 +2,8 @@
 
 #include "Resources.h"
 #include "GameStates.h"
-#include "Engine.h"
+
+#include <queue>
 
 namespace SnakeGame {
 
@@ -16,7 +17,7 @@ namespace SnakeGame {
 	class Player {
 	public:
 		Player();
-		void init(int speed = 1, int size = 4, int position = 620);
+		void init(float speed = 1.f, int size = 4, int position = 620);
 
 		void moveRight();
 		void moveLeft();
@@ -33,8 +34,9 @@ namespace SnakeGame {
 
 	private:
 		int size_ = 0;
-		int speed_ = 0;
 		int positionBuffer_ = 0;
+		float speed_ = 0.f;
+
 		std::vector<int> positionOnField_;
 
 		PlayerDirection direction_ = PlayerDirection::Right;

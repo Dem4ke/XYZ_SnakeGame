@@ -12,8 +12,17 @@ int main() {
 
 	game.initGame();
 
+	// Initialization of clocks
+	sf::Clock gameClock;
+	float lastTime = gameClock.getElapsedTime().asSeconds();
+
 	// Main loop
 	while (window.isOpen()) {
+
+		// Calculate time delta
+		float currentTime = gameClock.getElapsedTime().asSeconds();
+		float deltaTime = currentTime - lastTime;
+		lastTime = currentTime;
 
 		// OS state checkout
 		sf::Event event;
@@ -29,7 +38,7 @@ int main() {
 		}
 
 		// Update main gameplay 
-		game.updateGame();
+		game.updateGame(deltaTime);
 		game.gameOver();
 
 		// Draw game

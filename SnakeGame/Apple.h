@@ -1,7 +1,5 @@
 #pragma once
 
-#include "UI.h"
-
 namespace SnakeGame {
 
 	class Apple {

@@ -22,9 +22,6 @@
     <ClCompile Include="Apple.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
-    <ClCompile Include="Engine.cpp">
-      <Filter>Sources</Filter>
-    </ClCompile>
     <ClCompile Include="Player.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
@@ -55,9 +52,6 @@
       <Filter>Headers</Filter>
     </ClInclude>
     <ClInclude Include="Apple.h">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine.h">
       <Filter>Headers</Filter>
     </ClInclude>
     <ClInclude Include="Player.h">

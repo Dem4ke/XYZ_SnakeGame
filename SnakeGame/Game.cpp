@@ -8,7 +8,8 @@ namespace SnakeGame {
 		optionsMenu_(resources), exitMenu_(resources), 
 		pauseMenu_(resources), gameOverMenu_(resources), 
 	    leaderBoard_(resources), UI_(resources), 
-		gameField_(resources, gameState_) {}
+		gameField_(resources, gameState_), 
+		gameOverPopUp_(resources), chooseName_(resources) {}
 
 	void Game::initGame() {
 		std::vector<std::string> mainButtons = { "Play game", "Difficulity level", "Leader board", "Options", "Exit" };
@@ -16,7 +17,9 @@ namespace SnakeGame {
 		std::vector<std::string> optionsButtons = { "Music: On", "Sounds: On" };
 		std::vector<std::string> exitButtons = { "Yes", "No" };
 		std::vector<std::string> pauseButtons = { "Yes", "No" };
-		std::vector<std::string> gameOverButtons = { "\n\n\n\n\n\n\n\n\n\nExit" };
+		std::vector<std::string> gameOverButtons = { "\n\n\n\n\n\n\n\n\n\nPlay again", "\n\n\n\n\n\n\n\n\n\nExit"};
+		std::vector<std::string> gameOverPopUpButtons = { "No", "Yes" };
+		std::vector<std::string> chooseNamePopUpButtons = { "\n\nEnter" };
 
 		// Menu initialization (Name of menu, vector of buttons, size of buttons, color of buttons, id of menu)
 		// Name of menu will be in 1.5 bigger, id of menu needs for choose of background
@@ -26,10 +29,14 @@ namespace SnakeGame {
 		optionsMenu_.init("Options", optionsButtons, 40.f, sf::Color::White, 1);
 		exitMenu_.init("Do you want to exit?", exitButtons, 40.f, sf::Color::White, 1);
 		pauseMenu_.init("Do you want to exit\n\tin main menu?\n", pauseButtons, 40.f, sf::Color::White, 0);
-		gameOverMenu_.init("Game Over\n\n", gameOverButtons, 40.f, sf::Color::White, 1);
+		gameOverMenu_.init("Game Over\n\n\n", gameOverButtons, 40.f, sf::Color::White, 0);
 
 		// Leader board initialization (Name of menu, size of names, Settings class object)
 		leaderBoard_.init("Leader Board", 40.f, gameState_);
+
+		// Initialization of pop ups (Name of pop up, vector of buttons, size of buttons, color of buttons)
+		gameOverPopUp_.init("Do you want to save your score?", gameOverPopUpButtons, 40.f);
+		chooseName_.init("Enter your name", chooseNamePopUpButtons, 40.f);
 
 		// User interface initialization (size of a text elements)
 		UI_.init(20.f);
@@ -83,22 +90,30 @@ namespace SnakeGame {
 			break;
 		}
 		case GameStateType::LeaderBoard: {
-			//		LeaderBoardMovement(leaderBoard_, gameState_, event);
+			LeaderBoardMovement(leaderBoard_, gameState_, event);
 			break;
 		}
 		case GameStateType::GameOver: {
 			GameOverMenuMovement(gameOverMenu_, gameState_, event);
 			break;
 		}
+		case GameStateType::GameOverPopUp: {
+			GameOverPopUpMovement(gameOverPopUp_, gameState_, event);
+			break;
+		}
+		case GameStateType::ChooseNameOfPlayer: {
+			ChooseNamePopUpMovement(chooseName_, gameState_, event);
+			break;
+		}
 		}
 	}
 
 	// Update only game process 
-	void Game::updateGame() {
+	void Game::updateGame(const float& deltaTime) {
 		if (gameState_.getCurrentGameState() == GameStateType::Game) {
 
 			// Update main game process
-			gameField_.update();
+			gameField_.update(deltaTime);
 
 			// Pause menu maker
 			ExitInPauseMenu(gameState_);
@@ -111,6 +126,10 @@ namespace SnakeGame {
 	void Game::gameOver() {
 		if (gameState_.getCurrentGameState() == GameStateType::GameOver) {
 			leaderBoard_.sortTable(gameState_);
+		}
+		else if (gameState_.getCurrentGameState() == GameStateType::PlayAgain) {
+			restartGame();
+			gameState_.pushGameState(GameStateType::Game);
 		}
 		else if (gameState_.getCurrentGameState() == GameStateType::GameReset) {
 			restartGame();
@@ -131,11 +150,26 @@ namespace SnakeGame {
 			DrawMenu(exitMenu_, window_);
 		}
 		else if (gameState_.getCurrentGameState() == GameStateType::Pause) {
+			window_.draw(gameBackSprite_);
+			DrawGameField(gameField_, window_);
 			DrawMenu(pauseMenu_, window_);
 		}
 		else if (gameState_.getCurrentGameState() == GameStateType::GameOver) {
+			window_.draw(gameBackSprite_);
+			DrawGameField(gameField_, window_);
 			DrawMenu(gameOverMenu_, window_);
-			DrawLeaderBoard(leaderBoard_, window_);
+		}
+		else if (gameState_.getCurrentGameState() == GameStateType::GameOverPopUp) {
+			window_.draw(gameBackSprite_);
+			DrawGameField(gameField_, window_);
+			DrawPopUp(gameOverPopUp_, window_, gameState_);
+			DrawGameOverUI(UI_, window_);
+		}
+		else if (gameState_.getCurrentGameState() == GameStateType::ChooseNameOfPlayer) {
+			window_.draw(gameBackSprite_);
+			DrawGameField(gameField_, window_);
+			DrawPopUp(chooseName_, window_, gameState_);
+			DrawGameOverUI(UI_, window_);
 		}
 		else if (gameState_.getCurrentGameState() == GameStateType::LeaderBoard) {
 			DrawLeaderBoard(leaderBoard_, window_);

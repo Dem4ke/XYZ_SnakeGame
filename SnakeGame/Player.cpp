@@ -6,10 +6,10 @@ namespace SnakeGame {
 
 	Player::Player() {}
 
-	void Player::init(int speed, int size, int position) {
+	void Player::init(float speed, int size, int position) {
 		// Initialization of player's characteristics
 		direction_ = PlayerDirection::Right;
-		speed_ = speed;
+		speed_ = speed * 1000;
 		size_ = size;
 
 		// Set head position
@@ -63,5 +63,4 @@ namespace SnakeGame {
 	int Player::getSpeed() const { return speed_; }
 
 	PlayerDirection Player::getDirection() const { return direction_; }
-
 }
