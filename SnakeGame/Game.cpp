@@ -61,9 +61,21 @@ namespace SnakeGame {
 		// Initialization of game field, and reset all game objects
 		gameField_.reset();
 
-		// Reset score
-		gameState_.resetScore();
+		// Reset menus
+		mainMenu_.reset();
+		difficultyLevelMenu_.reset();
+		optionsMenu_.reset();
+		exitMenu_.reset();
+		pauseMenu_.reset();
+		gameOverMenu_.reset();
+
+		// Reset score and player name
+		gameState_.reset();
 		UI_.scoreUpdate(gameState_);
+
+		// Reset pop ups
+		gameOverPopUp_.reset();
+		chooseName_.reset();
 	}
 
 	// Update menu states, it works only with Event

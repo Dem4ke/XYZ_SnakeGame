@@ -51,7 +51,7 @@ namespace SnakeGame {
 		GameState();
 
 		void scoreIncrease(int cost);
-		void resetScore();
+		void reset();
 		
 		void pushGameState(GameStateType newType);
 		void popGameState();
@@ -77,7 +77,8 @@ namespace SnakeGame {
 
 		DifficultyLevel diffLvl_ = DifficultyLevel::Easy;
 
-		std::string playerName_ = "";
+		std::string DefaultPlayerName_ = "XYZ";
+		std::string playerName_ = "XYZ";
 		int score_ = 0;
 		int afterPauseTime_ = 1; // seconds before game will continue
 

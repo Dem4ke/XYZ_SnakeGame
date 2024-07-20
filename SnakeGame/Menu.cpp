@@ -55,6 +55,14 @@ namespace SnakeGame {
 		buttons_[selectedButton_].setFillColor(chosenButtonColor_);
 	}
 
+	// Reset menu to default
+	void Menu::reset() {
+		// Set choosen button to first button
+		buttons_[selectedButton_].setFillColor(mainButtonColor_);
+		selectedButton_ = 0;
+		buttons_[selectedButton_].setFillColor(chosenButtonColor_);
+	}
+
 	void Menu::moveUp() {
 		if (selectedButton_ >= 0) {
 			buttons_[selectedButton_].setFillColor(mainButtonColor_);
@@ -257,6 +265,20 @@ namespace SnakeGame {
 		// Color of the first button
 		int selectedButton_ = 0;
 		buttons_[selectedButton_].setFillColor(chosenButtonColor_);
+	}
+
+	// Reset pop up to default
+	void PopUp::reset() {
+		// Set choosen button to first button
+		buttons_[selectedButton_].setFillColor(mainButtonColor_);
+		selectedButton_ = 0;
+		buttons_[selectedButton_].setFillColor(chosenButtonColor_);
+
+		// Delete entered name of player and set a default
+		deleteName();
+		playerName_.setString(DefaultPlayerName_);
+		playerName_.setOrigin(sf::Vector2f(playerName_.getGlobalBounds().width / 2.f, playerName_.getGlobalBounds().height / 2.5f));
+		playerName_.setPosition(posX_, posY_);
 	}
 
 	// Enter player's name after game

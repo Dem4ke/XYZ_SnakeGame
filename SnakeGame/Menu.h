@@ -15,6 +15,7 @@ namespace SnakeGame {
 
 		void init(std::string menuName, std::vector<std::string>& allButtons, 
 				float buttonSize = 40.f, sf::Color colorOfButtons = sf::Color::White, int menuId = 0);
+		void reset();
 		void moveUp();
 		void moveDown();
 
@@ -104,6 +105,7 @@ namespace SnakeGame {
 
 		void init(std::string popUpName, std::vector<std::string>& allButtons,
 			float buttonSize = 40.f, sf::Color colorOfButtons = sf::Color::White);
+		void reset();
 
 		void enterName(sf::String letter);
 		void deleteName();

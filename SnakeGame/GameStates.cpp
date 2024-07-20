@@ -64,8 +64,9 @@ namespace SnakeGame {
 	}
 
 	// Reset apples counter when game has been restarted
-	void GameState::resetScore() {
+	void GameState::reset() {
 		score_ = 0;
+		playerName_ = DefaultPlayerName_;
 	}
 
 	// Add a new game state in "game states stack"
