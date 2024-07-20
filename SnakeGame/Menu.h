@@ -127,7 +127,7 @@ namespace SnakeGame {
 
 		std::string DefaultPlayerName_ = "XYZ";
 		sf::String playerInput_;
-		sf::Text playerName_;		
+		sf::Text playerName_;
 	};
 
 	// Movement in menu 

@@ -87,6 +87,7 @@ namespace SnakeGame {
 	// Init sound of a click on any button
 	void SoundOfChoose(Resources& resources) {
 		resources.sound.setBuffer(resources.soundOfChoose);
+		resources.sound.setVolume(5.f);
 		resources.sound.play();
 	}
 

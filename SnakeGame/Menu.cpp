@@ -555,26 +555,29 @@ namespace SnakeGame {
 	}
 
 	void ChooseNamePopUpMovement(PopUp& popUp, GameState& gameState, LeaderBoard& leaderBoard, const sf::Event& event) {
-		if (event.type == sf::Event::KeyReleased) {
-			if (event.key.code == popUp.getEnterKey()) {
-				popUp.savePlayerInTable(gameState);
+		if (event.type == sf::Event::KeyReleased) {			
+			if (event.key.code == sf::Keyboard::BackSpace) {
+				popUp.deleteName();
+			}
+			else if (event.key.code == popUp.getEscapeKey()) {
+				popUp.chooseButtonSound();
+				gameState.pushGameState(GameStateType::GameOver);
+			}
+			else if (event.key.code == popUp.getEnterKey()) {
 				leaderBoard.addPlayer(gameState);
 				leaderBoard.sortTable(gameState);
 				leaderBoard.saveTable(gameState);
 				popUp.chooseButtonSound();
 				gameState.pushGameState(GameStateType::GameOver);
 			}
-			else if (event.key.code == sf::Keyboard::BackSpace) {
-				popUp.deleteName();
+		}
+		else if (event.type == sf::Event::KeyPressed) {
+			if (event.key.code == popUp.getEnterKey()) {
+				popUp.savePlayerInTable(gameState);
 			}
-			else if (event.key.code == sf::Keyboard::Escape) {
-				popUp.chooseButtonSound();
-				gameState.pushGameState(GameStateType::GameOver);
-			}
-
-			if (event.type == sf::Event::TextEntered) {
-				popUp.enterName(event.text.unicode);
-			}
+		}
+		else if (event.type == sf::Event::TextEntered) {
+			popUp.enterName(event.text.unicode);
 		}
 	}
 
