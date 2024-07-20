@@ -7,8 +7,8 @@ namespace SnakeGame {
 		mainMenu_(resources), difficultyLevelMenu_(resources), 
 		optionsMenu_(resources), exitMenu_(resources), 
 		pauseMenu_(resources), gameOverMenu_(resources), 
-	    leaderBoard_(resources), UI_(resources), 
-		gameField_(resources, gameState_), 
+	    leaderBoard_(resources),
+		UI_(resources), gameField_(resources, gameState_), 
 		gameOverPopUp_(resources), chooseName_(resources) {}
 
 	void Game::initGame() {
@@ -17,7 +17,7 @@ namespace SnakeGame {
 		std::vector<std::string> optionsButtons = { "Music: On", "Sounds: On" };
 		std::vector<std::string> exitButtons = { "Yes", "No" };
 		std::vector<std::string> pauseButtons = { "Yes", "No" };
-		std::vector<std::string> gameOverButtons = { "\n\n\n\n\n\n\n\n\n\nPlay again", "\n\n\n\n\n\n\n\n\n\nExit"};
+		std::vector<std::string> gameOverButtons = { "\n\n\n\n\n\n\n\nPlay again", "\n\n\n\n\n\n\n\nExit"};
 		std::vector<std::string> gameOverPopUpButtons = { "No", "Yes" };
 		std::vector<std::string> chooseNamePopUpButtons = { "\n\nEnter" };
 
@@ -31,8 +31,8 @@ namespace SnakeGame {
 		pauseMenu_.init("Do you want to exit\n\tin main menu?\n", pauseButtons, 40.f, sf::Color::White, 0);
 		gameOverMenu_.init("Game Over\n\n\n", gameOverButtons, 40.f, sf::Color::White, 0);
 
-		// Leader board initialization (Name of menu, size of names, Settings class object)
-		leaderBoard_.init("Leader Board", 40.f, gameState_);
+		// Leader board initialization (Name of menu, size of names, number of drawable positions)
+		leaderBoard_.init("Leader Board", 40.f, 8, gameState_);
 
 		// Initialization of pop ups (Name of pop up, vector of buttons, size of buttons, color of buttons)
 		gameOverPopUp_.init("Do you want to save your score?", gameOverPopUpButtons, 40.f);
@@ -68,6 +68,9 @@ namespace SnakeGame {
 		exitMenu_.reset();
 		pauseMenu_.reset();
 		gameOverMenu_.reset();
+
+		// Load leader board from file and sort it
+		leaderBoard_.sortTable(gameState_);
 
 		// Reset score and player name
 		gameState_.reset();
@@ -114,7 +117,7 @@ namespace SnakeGame {
 			break;
 		}
 		case GameStateType::ChooseNameOfPlayer: {
-			ChooseNamePopUpMovement(chooseName_, gameState_, event);
+			ChooseNamePopUpMovement(chooseName_, gameState_, leaderBoard_, event);
 			break;
 		}
 		}
@@ -170,6 +173,7 @@ namespace SnakeGame {
 			window_.draw(gameBackSprite_);
 			DrawGameField(gameField_, window_);
 			DrawMenu(gameOverMenu_, window_);
+			DrawGameOverLeaderBoard(leaderBoard_, window_);
 		}
 		else if (gameState_.getCurrentGameState() == GameStateType::GameOverPopUp) {
 			window_.draw(gameBackSprite_);

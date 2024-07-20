@@ -1,2 +1,6 @@
+Billy 102
 Hydra 100
 Dominatus 98
+XYZ 96
+XYA 4
+XYZ 2

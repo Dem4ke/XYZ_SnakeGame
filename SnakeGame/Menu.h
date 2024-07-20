@@ -64,10 +64,13 @@ namespace SnakeGame {
 	public:
 		LeaderBoard(Resources& resources) : resources_(resources) {}
 
-		void init(std::string menuName, float buttonSize, GameState& settings);
-		void sortTable(GameState& settings);
+		void init(std::string menuName, float buttonSize, int drawablePositions, GameState& gameState);
+		void sortTable(GameState& gameState);
+		void addPlayer(GameState& gameState);
+		void saveTable(GameState& gameState);
 
 		int getPositionsCount() const;
+		int getShortPosCount() const;
 		
 		sf::Text getName(int num) const;
 		sf::Text getScore(int num) const;
@@ -77,7 +80,8 @@ namespace SnakeGame {
 		sf::Keyboard::Key getEscapeKey() const;
 
 	private:
-		int drawablePositions_ = 8;
+		int drawablePositions_ = 0;
+		int shortDrawablePos_ = 0;
 
 		float posX_ = 0;
 		float posY_ = 0;
@@ -139,7 +143,7 @@ namespace SnakeGame {
 	
 	// Pop up movement
 	void GameOverPopUpMovement(PopUp& popUp, GameState& gameState, const sf::Event& event);
-	void ChooseNamePopUpMovement(PopUp& popUp, GameState& gameState, const sf::Event& event);
+	void ChooseNamePopUpMovement(PopUp& popUp, GameState& gameState, LeaderBoard& leaderBoard, const sf::Event& event);
 
 	// Toolbox functions
 	void ExitInPauseMenu(GameState& gameState);
@@ -147,5 +151,6 @@ namespace SnakeGame {
 	// Draw menu
 	void DrawMenu(Menu& mainMenu, sf::RenderWindow& window);
 	void DrawLeaderBoard(LeaderBoard& leaderBoard, sf::RenderWindow& window);
+	void DrawGameOverLeaderBoard(LeaderBoard& leaderBoard, sf::RenderWindow& window);
 	void DrawPopUp(PopUp& popUp, sf::RenderWindow& window, GameState& gameState);
 }

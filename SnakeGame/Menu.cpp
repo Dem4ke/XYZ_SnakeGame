@@ -136,10 +136,12 @@ namespace SnakeGame {
 	//----------------------------------------------------------
 	// LEADER BOARD
 
-	void LeaderBoard::init(std::string menuName, float buttonSize, GameState& gameState) {
+	void LeaderBoard::init(std::string menuName, float buttonSize, int drawablePositions, GameState& gameState) {
 		posX_ = resources_.getWindowWidth() / 2.f;
 		posY_ = resources_.getWindowHeight() / 5.f;
 		buttonSize_ = buttonSize;
+		drawablePositions_ = drawablePositions;
+		shortDrawablePos_ = drawablePositions - 3;
 
 		// Initialization of a menu name
 		menuName_.setFont(resources_.font);
@@ -163,20 +165,13 @@ namespace SnakeGame {
 
 		SetSpriteSize(backgroundSprite_, resources_.getWindowWidth(), resources_.getWindowHeight());
 
-		// Get leader board from file 
-		sortTable(gameState);
+		// Get leader board from file
+		gameState.deserialize(tableText_);
 	}
 
 	void LeaderBoard::sortTable(GameState& gameState) {
-		// Get leader board from file 
-		gameState.deserialize(tableText_);
-
 		float space = buttonSize_;
-
-		if (gameState.getPlayerName() != "") {
-			tableText_.push_back({ gameState.getPlayerName() , gameState.getScore() });
-		}
-
+		
 		auto cmp = [](std::pair<std::string, int> const& a, std::pair<std::string, int> const& b) {
 			return a.second > b.second;
 		};
@@ -198,13 +193,24 @@ namespace SnakeGame {
 
 			space += buttonSize_;
 		}
-		
-		// Save leader board in file
+	}
+
+	// Add player in leader board
+	void LeaderBoard::addPlayer(GameState& gameState) {
+		tableText_.push_back({ gameState.getPlayerName() , gameState.getScore() });
+	}
+
+	// Save leader board in file
+	void LeaderBoard::saveTable(GameState& gameState) {
 		gameState.serialize(tableText_);
 	}
 
 	int LeaderBoard::getPositionsCount() const { 
 		return drawablePositions_ > liderBoard_.size() ? liderBoard_.size() : drawablePositions_; 
+	}
+
+	int LeaderBoard::getShortPosCount() const {	
+		return shortDrawablePos_ > liderBoard_.size() ? liderBoard_.size() : shortDrawablePos_;
 	}
 
 	sf::Text LeaderBoard::getName(int num) const { return liderBoard_[num].first; }
@@ -548,14 +554,13 @@ namespace SnakeGame {
 		}
 	}
 
-	void ChooseNamePopUpMovement(PopUp& popUp, GameState& gameState, const sf::Event& event) {
-		if (event.type == sf::Event::TextEntered) {
-			popUp.enterName(event.text.unicode);
-		}
-		
+	void ChooseNamePopUpMovement(PopUp& popUp, GameState& gameState, LeaderBoard& leaderBoard, const sf::Event& event) {
 		if (event.type == sf::Event::KeyReleased) {
 			if (event.key.code == popUp.getEnterKey()) {
 				popUp.savePlayerInTable(gameState);
+				leaderBoard.addPlayer(gameState);
+				leaderBoard.sortTable(gameState);
+				leaderBoard.saveTable(gameState);
 				popUp.chooseButtonSound();
 				gameState.pushGameState(GameStateType::GameOver);
 			}
@@ -565,6 +570,10 @@ namespace SnakeGame {
 			else if (event.key.code == sf::Keyboard::Escape) {
 				popUp.chooseButtonSound();
 				gameState.pushGameState(GameStateType::GameOver);
+			}
+
+			if (event.type == sf::Event::TextEntered) {
+				popUp.enterName(event.text.unicode);
 			}
 		}
 	}
@@ -595,6 +604,13 @@ namespace SnakeGame {
 		window.draw(leaderBoard.getBackground());
 		window.draw(leaderBoard.getGeneralName());
 		for (int i = 0, it = leaderBoard.getPositionsCount(); i < it; ++i) {
+			window.draw(leaderBoard.getName(i));
+			window.draw(leaderBoard.getScore(i));
+		}
+	}
+
+	void DrawGameOverLeaderBoard(LeaderBoard& leaderBoard, sf::RenderWindow& window) {
+		for (int i = 0, it = leaderBoard.getShortPosCount(); i < it; ++i) {
 			window.draw(leaderBoard.getName(i));
 			window.draw(leaderBoard.getScore(i));
 		}
