@@ -40,6 +40,12 @@
     <ClCompile Include="GameField.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
+    <ClCompile Include="PopUp.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="LeaderBoard.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -67,6 +73,12 @@
       <Filter>Headers</Filter>
     </ClInclude>
     <ClInclude Include="GameField.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="PopUp.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="LeaderBoard.h">
       <Filter>Headers</Filter>
     </ClInclude>
   </ItemGroup>

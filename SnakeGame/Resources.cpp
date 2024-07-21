@@ -4,36 +4,41 @@
 namespace SnakeGame {
 	Resources::Resources(float width, float height) : width_(width), height_(height) {
 		setTextures();
+		setBackgrounds();
 		setSounds();
 		setFont();
 	}
 
 	// Load texures from resources path
 	void Resources::setTextures() {
-		assert(snakeHeadTexture.loadFromFile(resourcesPath_ + "Snake_head.png"));
-		assert(snakeBodyTexture.loadFromFile(resourcesPath_ + "Snake_Body.png"));
-		assert(appleTexture.loadFromFile(resourcesPath_ + "Apple.png"));
-		assert(wallTexture.loadFromFile(resourcesPath_ + "wall.png"));
-		assert(mainMenuBackground.loadFromFile(resourcesPath_ + "Background.jpg"));
-		assert(gameBackground.loadFromFile(resourcesPath_ + "Background.jpg"));
+		assert(snakeHeadTexture.loadFromFile(resourcesPath_ + texturesPath_ + "Snake_head.png"));
+		assert(snakeBodyTexture.loadFromFile(resourcesPath_ + texturesPath_ + "Snake_Body.png"));
+		assert(appleTexture.loadFromFile(resourcesPath_ + texturesPath_ + "Apple.png"));
+		assert(wallTexture.loadFromFile(resourcesPath_ + texturesPath_ + "wall.png"));
+	}
+
+	// Loads backgrounds from resources path
+	void Resources::setBackgrounds() {
+		assert(mainMenuBackground.loadFromFile(resourcesPath_ + backgroundsPath_ + "Menu_background.jpg"));
+		assert(gameBackground.loadFromFile(resourcesPath_ + backgroundsPath_ + "Background.jpg"));
 	}
 
 	// Load sounds from resources path
 	void Resources::setSounds() {
 		// Little sounds
-		assert(menuMove.loadFromFile(resourcesPath_ + "Owlstorm__Snake_hit.wav"));
-		assert(appleEatenSound.loadFromFile(resourcesPath_ + "AppleEat.wav"));
-		assert(gameOverSound.loadFromFile(resourcesPath_ + "Maodin204__Lose.wav"));
-		assert(hitSound.loadFromFile(resourcesPath_ + "Owlstorm__Snake_hit.wav"));
-		assert(soundOfChoose.loadFromFile(resourcesPath_ + "Theevilsocks__menu-hover.wav"));
+		assert(menuMove.loadFromFile(resourcesPath_ + soundsPath_ + "Owlstorm__Snake_hit.wav"));
+		assert(appleEatenSound.loadFromFile(resourcesPath_ + soundsPath_ + "AppleEat.wav"));
+		assert(gameOverSound.loadFromFile(resourcesPath_ + soundsPath_ + "Maodin204__Lose.wav"));
+		assert(hitSound.loadFromFile(resourcesPath_ + soundsPath_ + "Owlstorm__Snake_hit.wav"));
+		assert(soundOfChoose.loadFromFile(resourcesPath_ + soundsPath_ + "Theevilsocks__menu-hover.wav"));
 
 		// Long sounds or background music (not loads file but opens it for a whole session)
-		assert(backMusic.openFromFile(resourcesPath_ + "Clinthammer__Background_Music.wav"));
+		assert(backMusic.openFromFile(resourcesPath_ + soundsPath_ + "Clinthammer__Background_Music.wav"));
 	}
 
 	// Load fonts from resources path
 	void Resources::setFont() {
-		assert(font.loadFromFile(resourcesPath_ + "Fonts/Roboto-Regular.ttf"));
+		assert(font.loadFromFile(resourcesPath_ + fontsPath_ + "Roboto-Regular.ttf"));
 	}
 
 	float Resources::getWindowWidth() const { return width_; }

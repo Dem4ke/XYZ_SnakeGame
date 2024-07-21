@@ -2,6 +2,8 @@
 
 #include "GameField.h"
 #include "Menu.h"
+#include "LeaderBoard.h"
+#include "PopUp.h"
 #include "Player.h"
 #include "Apple.h"
 #include "Wall.h"

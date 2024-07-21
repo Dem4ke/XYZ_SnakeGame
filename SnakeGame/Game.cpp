@@ -21,7 +21,7 @@ namespace SnakeGame {
 		std::vector<std::string> gameOverPopUpButtons = { "No", "Yes" };
 		std::vector<std::string> chooseNamePopUpButtons = { "\n\nEnter" };
 
-		// Menu initialization (Name of menu, vector of buttons, size of buttons, color of buttons, id of menu)
+		// Menu initialization (Name of menu, vector of buttons, size of buttons, color of buttons (defaultd - white), id of menu (defaultd - 0)
 		// Name of menu will be in 1.5 bigger, id of menu needs for choose of background
 		// id: 0 - empty background, 1 or any other - main background
 		mainMenu_.init("Snake Game", mainButtons, 40.f, sf::Color::White, 1);

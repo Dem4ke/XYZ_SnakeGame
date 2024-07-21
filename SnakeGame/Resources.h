@@ -10,6 +10,7 @@ namespace SnakeGame {
 		Resources(float width, float height);
 
 		void setTextures();
+		void setBackgrounds();
 		void setSounds();
 		void setFont();
 
@@ -39,6 +40,10 @@ namespace SnakeGame {
 		float width_ = 0;
 		float height_ = 0;
 		const std::string resourcesPath_ = "Resources/";
+		const std::string fontsPath_ = "Fonts/";
+		const std::string texturesPath_ = "MainTextures/";
+		const std::string soundsPath_ = "Sounds/";
+		const std::string backgroundsPath_ = "Backgrounds/";
 	};
 
 	// Sprites
